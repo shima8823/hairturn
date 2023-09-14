@@ -1,95 +1,148 @@
-import Image from 'next/image'
+'use client'
 import styles from './page.module.css'
+import { useDropzone } from 'react-dropzone'
+import { useCallback, useMemo, useState } from 'react'
+import { Card, Row, Col, Container, Button, Modal, Form } from 'react-bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { CardContext } from './components/CardContext'
+import { cardsData, cardData, selectRandomCard } from './cardUtils'
+import HairStyleControls from './components/HairStyleControls'
+
+function chunkArray<cardData>(
+  array: cardData[],
+  chunkSize: number
+): cardData[][] {
+  const results = []
+  let arrayCopy = [...array] // コピーを作成して作業する
+  while (arrayCopy.length) {
+    results.push(arrayCopy.splice(0, chunkSize))
+  }
+  return results
+}
 
 export default function Home() {
+  const [cards, setCards] = useState<cardData[][]>(chunkArray(cardsData, 3))
+  const [show, setShow] = useState(false)
+
+  const [image, setImage] = useState<string>('')
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState<string | null>('')
+
+  const handleClose = () => setShow(false)
+  const handleSaveHair = () => {
+    const newCard = {
+      image: image,
+      title: title,
+      description: description
+    }
+    const newCardsData = [...cardsData, newCard]
+    cardsData.push(newCard)
+    console.log(newCard)
+    console.log(cardsData)
+    console.log(newCardsData)
+    newCard.image = 'hair500.webp'
+
+    setCards(chunkArray(newCardsData, 3))
+    setShow(false)
+  }
+  const handleShow = () => setShow(true)
+  const selectRandomCard = () => {
+    const randomCard = cardsData[Math.floor(Math.random() * cardsData.length)]
+    console.log(randomCard)
+  }
+
+  const handleCardClick = (card: cardData) => {
+    setShow(true)
+  }
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+    <CardContext.Provider value={{ cards, selectRandomCard }}>
+      <div>
+        {/* ランダムに髪型を決めるボタン 中央*/}
+        <Button
+          variant="primary"
+          onClick={selectRandomCard}
+          className={styles['random-button']}
+        >
+          New Hair
+        </Button>
+
+        <HairStyleControls addHair={handleShow} />
+
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              {/* Image Input */}
+              <Form.Group className="mb-3">
+                <Form.Label>Upload Image</Form.Label>
+                <Form.Control
+                  type="file"
+                  onChange={(e) => setImage(e.target.value)}
+                />
+              </Form.Group>
+
+              {/* Title Input */}
+              <Form.Group className="mb-3">
+                <Form.Label>Title</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter title"
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </Form.Group>
+
+              {/* Description Input */}
+              <Form.Group className="mb-3">
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  placeholder="Enter description"
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleSaveHair}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Container>
+          {cards.map((row, rowIndex) => (
+            <Row key={rowIndex}>
+              {row.map((card, cardIndex) => (
+                <Col md={4} key={cardIndex}>
+                  <Card
+                    style={{ width: '18rem' }}
+                    onClick={() => handleCardClick(card)}
+                  >
+                    <Card.Img
+                      variant="top"
+                      src={card.image}
+                      className={styles['card-img-top']}
+                    />
+                    <Card.Body>
+                      <Card.Title>{card.title}</Card.Title>
+                      {/* <Card.Text className={styles["card-text"]}>
+											{card.description}
+										</Card.Text> */}
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          ))}
+        </Container>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </CardContext.Provider>
   )
 }
