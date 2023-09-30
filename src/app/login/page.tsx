@@ -1,18 +1,44 @@
 'use client'
-import React from 'react'
+
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { Container, Form, Button, Row, Col } from 'react-bootstrap'
+import supabase from '../supabase'
 
 export default function Login() {
+  const router = useRouter()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleLogin = async () => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password
+    })
+    if (error) {
+      alert(error.message)
+      return
+    }
+    router.push('/')
+  }
+
   return (
     <Container className="p-3 my-5 d-flex flex-column w-50">
       <Form.Group className="mb-4">
         <Form.Label>メールアドレス</Form.Label>
-        <Form.Control type="email" />
+        <Form.Control
+          type="email"
+          placeholder="mail@example.com"
+          onChange={(e) => setEmail(e.target.value)}
+        />
       </Form.Group>
 
       <Form.Group className="mb-4">
         <Form.Label>パスワード</Form.Label>
-        <Form.Control type="password" />
+        <Form.Control
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </Form.Group>
 
       <Row className="d-flex justify-content-between mx-3 mb-4">
@@ -24,10 +50,12 @@ export default function Login() {
         </Col>
       </Row>
 
-      <Button className="mb-4">ログイン</Button>
+      <Button className="mb-4" onClick={handleLogin}>
+        ログイン
+      </Button>
 
       <div className="text-center">
-        <a href="#!">会員登録はこちら</a>
+        <a href="/signup">会員登録はこちら</a>
         <p>or sign up with:</p>
 
         <div
