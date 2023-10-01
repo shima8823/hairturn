@@ -4,5 +4,8 @@
       "GO_BUILD_FLAGS": "-ldflags '-s -w'"
     }
   },
-  "routes": [{ "src": "/api/health", "dest": "/index.html" }]
+  "routes": [
+    { "src": "/api/health", "dest": "/api/health" },
+    { "src": "/api/account", "dest": "/api/account" }
+  ]
 }
