@@ -3,16 +3,30 @@ package health
 import (
 	"encoding/json"
 	"net/http"
+	"zubohair/server/dao"
+	"github.com/jmoiron/sqlx"
+	"log"
 )
 
-// HealthResponse represents the structure of the health check response.
 type HealthResponse struct {
 	Status string `json:"status"`
 }
 
-// HealthCheckHandler handles the health check request.
+var db *sqlx.DB
+
 func HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
-	// TODO: 実際の健全性チェック処理をここに追加する (例: DB接続の確認)
+	db, err := dao.GetDBConnection(db)
+	if err != nil {
+		panic(err)
+	}
+
+	var version string
+	err = db.QueryRow("SELECT version()").Scan(&version)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println(version)
+
 
 	response := HealthResponse{
 		Status: "healthy",
