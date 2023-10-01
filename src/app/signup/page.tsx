@@ -3,14 +3,18 @@
 import { useState } from 'react'
 import { InputGroup } from 'react-bootstrap'
 import { Container, Form, Button } from 'react-bootstrap'
-import supabase from '../supabase'
 import { useRouter } from 'next/navigation'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+
+import type { Database } from '@/lib/database.types'
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const supabase = createClientComponentClient<Database>()
+
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/
@@ -44,7 +48,7 @@ export default function Signup() {
               id: data.data.user?.id
             })
           }).then(() => {
-            router.push('/')
+            router.back()
           })
         }
       })

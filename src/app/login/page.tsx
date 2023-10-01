@@ -3,12 +3,15 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Container, Form, Button, Row, Col } from 'react-bootstrap'
-import supabase from '../supabase'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+
+import type { Database } from '@/lib/database.types'
 
 export default function Login() {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const supabase = createClientComponentClient<Database>()
 
   const handleLogin = async () => {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -19,7 +22,7 @@ export default function Login() {
       alert(error.message)
       return
     }
-    router.push('/')
+    router.back()
   }
 
   return (
