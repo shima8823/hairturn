@@ -22,6 +22,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		hairstyleHandler.Retrieve(w, r)
 	case http.MethodPost:
 		hairstyleHandler.Create(w, r)
+	case http.MethodDelete:
+		hairstyleHandler.Delete(w, r)
 	default:
 		w.WriteHeader(http.StatusMethodNotAllowed)
 	}

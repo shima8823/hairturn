@@ -79,3 +79,22 @@ func (r *hairstyle) Retrieve(ctx context.Context, user_id string) ([]*object.Hai
 	return result, nil
 }
 
+func (r *hairstyle) Delete(ctx context.Context, title string) error {
+	const delete = "DELETE FROM hairstyles WHERE title = $1"
+	res, err := r.db.ExecContext(ctx, delete, title)
+	if err != nil {
+		return err
+	}
+	
+	affect, err := res.RowsAffected()
+	if err != nil {
+		return  err
+	}
+
+	if affect == 0 {
+		return sql.ErrNoRows
+	}
+	
+	return nil
+}
+
