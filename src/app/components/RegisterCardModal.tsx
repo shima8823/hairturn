@@ -1,27 +1,15 @@
 'use client'
-import {
-  Navbar,
-  Nav,
-  NavDropdown,
-  Container,
-  Button,
-  Modal,
-  Form
-} from 'react-bootstrap'
-import { CardContext } from './CardContext'
+import { Button, Modal, Form } from 'react-bootstrap'
 import { useState } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import {
   createClientComponentClient,
   Session
 } from '@supabase/auth-helpers-nextjs'
 import Image from 'next/image'
 
-import type { Database } from '@/lib/database.types'
 import { cardData } from '../cardUtils'
 import crypto from 'crypto'
-
-// supabase storageからdownloadする関数
 
 function generateSecureRandomString(length: number): string {
   return crypto.randomBytes(length).toString('hex').slice(0, length)
@@ -54,11 +42,9 @@ export default function RegisterCardModal(props: {
     const fileObj = e.target.files[0]
     if (fileObj) {
       const src = URL.createObjectURL(fileObj)
-      //   console.log('file.name: ', file.name)
       setFile(fileObj)
       setImageURL(src)
       console.log('handleImageChange3')
-      //   setFile(file)
     }
   }
   async function fetchImage(bucket: string, path: string): Promise<string> {
@@ -137,14 +123,8 @@ export default function RegisterCardModal(props: {
             <div>
               <Image src={imageURL} alt="Selected" width={500} height={500} />
             </div>
-            // <img
-            //   src={imageURL}
-            //   alt="Selected"
-            //   style={{ maxWidth: '100%', height: 'auto' }}
-            // />
           )}
 
-          {/* Title Input */}
           <Form.Group className="mb-3">
             <Form.Label>Title</Form.Label>
             <Form.Control
@@ -154,7 +134,6 @@ export default function RegisterCardModal(props: {
             />
           </Form.Group>
 
-          {/* Description Input */}
           <Form.Group className="mb-3">
             <Form.Label>Description</Form.Label>
             <Form.Control

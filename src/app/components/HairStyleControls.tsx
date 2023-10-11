@@ -57,11 +57,7 @@ export default function HairStyleControls({
         />
       )}
 
-      <Button
-        variant="primary"
-        onClick={selectRandomCard}
-        // className={styles['random-button']}
-      >
+      <Button variant="primary" onClick={selectRandomCard}>
         New Hair
       </Button>
       {/* 右寄り */}
