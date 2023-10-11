@@ -1,13 +1,16 @@
 'use client'
 
-import styles from './page.module.css'
+import styles from '@/app/styles/policies.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
+import { useRouter } from 'next/navigation'
+
 export default function PrivacyPolicy() {
+  const router = useRouter()
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
-        <div className={`${styles['terms-contents']} col-md-8`}>
+        <div className={`${styles['policies-contents']} col-md-8`}>
           <h1 className="text-center mb-4">プライバシーポリシー</h1>
           <p>
             ＿＿＿＿＿＿＿＿（以下，「当社」といいます。）は，本ウェブサイト上で提供するサービス（以下,「本サービス」といいます。）における，ユーザーの個人情報の取扱いについて，以下のとおりプライバシーポリシー（以下，「本ポリシー」といいます。）を定めます。
@@ -86,14 +89,13 @@ export default function PrivacyPolicy() {
             </p>
             住所： 社名： 代表取締役： 担当部署： Eメールアドレス：
           </div>
-
-          <button
-            className="btn btn-secondary mt-3"
-            onClick={() => window.history.back()}
-          >
-            戻る
-          </button>
         </div>
+        <a
+          className={`${styles['pointer-cursor']} underline hover:text-gray-900 text-center d-block my-3`}
+          onClick={() => router.back()}
+        >
+          戻る
+        </a>
       </div>
     </div>
   )

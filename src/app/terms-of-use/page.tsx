@@ -1,13 +1,16 @@
 'use client'
 
-import styles from './page.module.css'
+import styles from '@/app/styles/policies.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
+import { useRouter } from 'next/navigation'
+
 export default function Terms() {
+  const router = useRouter()
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
-        <div className={`${styles['terms-contents']} col-md-8`}>
+        <div className={`${styles['policies-contents']} col-md-8`}>
           <h1 className="text-center mb-4">利用規約</h1>
           <p>
             この利用規約（以下、「本規約」といいます。）は、＿＿＿＿＿（以下、「当社」といいます。）がこのウェブサイト上で提供するサービス（以下、「本サービス」といいます。）の利用条件を定めるものです。登録ユーザーの皆さま（以下、「ユーザー」といいます。）には、本規約に従って、本サービスをご利用いただきます。
@@ -116,14 +119,13 @@ export default function Terms() {
               本サービスに関して紛争が生じた場合には、当社の本店所在地を管轄する裁判所を専属的合意管轄とします。
             </p>
           </div>
-
-          <button
-            className="btn btn-secondary mt-3"
-            onClick={() => window.history.back()}
-          >
-            戻る
-          </button>
         </div>
+        <a
+          className={`${styles['pointer-cursor']} underline hover:text-gray-900 text-center d-block my-3`}
+          onClick={() => router.back()}
+        >
+          戻る
+        </a>
       </div>
     </div>
   )
