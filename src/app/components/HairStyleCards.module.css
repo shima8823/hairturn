@@ -1,0 +1,10 @@
+.cardContainer {
+  width: 300px; /* Or any fixed width you prefer */
+  height: 400px; /* Or any fixed height you prefer */
+}
+
+.cardImage {
+  max-width: 100%;
+  max-height: 300px; /* Or any max-height you prefer */
+  object-fit: cover; /* This will ensure the aspect ratio of the image is maintained */
+}
