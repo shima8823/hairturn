@@ -91,7 +91,8 @@ export default function Signup() {
       <div className="text-center">
         <p>
           会員登録には、
-          <a href="">利用規約</a>と <a href="">プライバシーポリシー</a>{' '}
+          <a href="/terms-of-use">利用規約</a>と{' '}
+          <a href="/privacy-policy">プライバシーポリシー</a>{' '}
           への同意が必要です。
         </p>
       </div>
