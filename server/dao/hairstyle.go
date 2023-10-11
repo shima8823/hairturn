@@ -20,10 +20,29 @@ func NewHairStyle(db *sqlx.DB) repository.HairStyle {
 }
 
 func (r *hairstyle) Create(ctx context.Context, hairstyle *object.HairStyle) (sql.Result, error) {
-	const create = "INSERT INTO hairstyles (user_id, image_url, title, description) VALUES ($1, $2, $3, $4)"
+	var create string
+	var args []interface{}
 
-	result, err := r.db.ExecContext(ctx, create, hairstyle.UserId, hairstyle.ImageURL, hairstyle.Title, hairstyle.Description)
+	println("create hairstyle.ImageURL: ", *hairstyle.ImageURL, " hairstyle.Description: ", *hairstyle.Description)
+
+	if hairstyle.ImageURL != nil && hairstyle.Description != nil {
+		create = "INSERT INTO hairstyles (user_id, title, image_url, description) VALUES ($1, $2, $3, $4)"
+		args = []interface{}{hairstyle.UserId, hairstyle.Title, *hairstyle.ImageURL, *hairstyle.Description}
+	} else if hairstyle.ImageURL != nil {
+		create = "INSERT INTO hairstyles (user_id, title, image_url) VALUES ($1, $2, $3)"
+		args = []interface{}{hairstyle.UserId, hairstyle.Title, *hairstyle.ImageURL}
+	} else if hairstyle.Description != nil {
+		create = "INSERT INTO hairstyles (user_id, title, description) VALUES ($1, $2, $3)"
+		args = []interface{}{hairstyle.UserId, hairstyle.Title, *hairstyle.Description}
+	} else {
+		create = "INSERT INTO hairstyles (user_id, title) VALUES ($1, $2)"
+		args = []interface{}{hairstyle.UserId, hairstyle.Title}
+	}
+
+	result, err := r.db.ExecContext(ctx, create, args...)
+
 	if err != nil {
+		println("exec error", err.Error())
 		return nil, err
 	}
 	return result, nil
