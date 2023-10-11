@@ -1,0 +1,44 @@
+/* HairStyleCards.module.css */
+
+.cardContainer {
+  width: 300px; /* Or any fixed width you prefer */
+  height: 400px; /* Or any fixed height you prefer */
+}
+
+.cardImage {
+  max-width: 100%;
+  max-height: 300px; /* Or any max-height you prefer */
+  object-fit: cover; /* This will ensure the aspect ratio of the image is maintained */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdownToggle {
+  border: none;
+  background: transparent;
+  padding: 8px; /* パディングを追加してクリック可能な領域を広げる */
+  margin: 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 50%; /* 円状の背景のためのボーダー */
+  display: inline-flex; /* 中央寄せのための設定 */
+  align-items: center;
+  justify-content: center;
+  color: inherit; /* テキストカラーを上書き */
+  opacity: 1 !important; /* 非表示のスタイルを上書き */
+}
+
+.dropdownToggle:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: inherit; /* テキストカラーを上書き */
+}
+
+.dropdownToggle::after {
+  display: none; /* Bootstrap の矢印を非表示にします */
+  background-color: rgba(0, 0, 0, 0.1);
+  color: inherit; /* テキストカラーを上書き */
+}

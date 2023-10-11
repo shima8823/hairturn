@@ -9,7 +9,7 @@ import (
 type (
 	DAO interface {
 		Account() repository.Account
-
+		HairStyle() repository.HairStyle
 	}
 
 	dao struct {
@@ -24,5 +24,9 @@ func New(db *sqlx.DB) DAO {
 
 func (r *dao) Account() repository.Account {
 	return NewAccount(r.db)
+}
+
+func (r *dao) HairStyle() repository.HairStyle {
+	return NewHairStyle(r.db)
 }
 
