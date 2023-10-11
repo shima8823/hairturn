@@ -1,7 +1,16 @@
 'use client'
 
 import { useState } from 'react'
-import { Card, Row, Col, Container, Button, Modal, Form } from 'react-bootstrap'
+import {
+  Card,
+  Row,
+  Col,
+  Container,
+  Button,
+  Modal,
+  Dropdown,
+  DropdownButton
+} from 'react-bootstrap'
 import { cardData } from '../cardUtils'
 import styles from './HairStyleCards.module.css'
 import Image from 'next/image'
@@ -10,6 +19,7 @@ import {
   createClientComponentClient,
   Session
 } from '@supabase/auth-helpers-nextjs'
+import DisplayCard from './DisplayCard'
 
 export default function HairStyleCards({
   cards,
@@ -34,15 +44,13 @@ export default function HairStyleCards({
     setSelectedCard(null)
   }
 
-  const handleDeleteHair = async () => {
+  const handleDeleteHair = async (card: cardData) => {
     console.log('handleDeleteHair')
-    console.log('selectedCard: ', selectedCard == null)
-    console.log('session: ', session == null)
-    if (!selectedCard || !session) return
+    if (!card || !session) return
 
     // hairstylesテーブルから削除して、storageからも削除する
-    // selectedCard.imageのファイル名を取得 urlの最後の/以降の文字列
-    const url = selectedCard.image_url
+    // card.imageのファイル名を取得 urlの最後の/以降の文字列
+    const url = card.image_url
     if (url) {
       const fileName = url.split('/').pop()
       console.log('fileName: ', fileName)
@@ -64,7 +72,7 @@ export default function HairStyleCards({
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(selectedCard)
+      body: JSON.stringify(card)
     })
     if (!res.ok) {
       console.log(res.status)
@@ -90,36 +98,47 @@ export default function HairStyleCards({
                   className={styles.cardImage} // Apply max-width and max-height to the image
                 />
                 <Card.Body>
-                  <Card.Title>{card.title}</Card.Title>
-                  <Card.Text>{card.description}</Card.Text>
+                  <div className={styles.header}>
+                    <Card.Title>{card.title}</Card.Title>
+                    <Dropdown onClick={(e) => e.stopPropagation()}>
+                      <Dropdown.Toggle
+                        id="dropdown-basic"
+                        className={styles.dropdownToggle}
+                      >
+                        ︙
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu>
+                        <Dropdown.Item
+                          onClick={() => {
+                            console.log('編集')
+                          }}
+                        >
+                          編集
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => {
+                            handleDeleteHair(card)
+                          }}
+                        >
+                          削除
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </div>
                 </Card.Body>
               </Card>
             </div>
           </Col>
         ))}
       </Row>
-      <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>{selectedCard?.title}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {selectedCard && selectedCard.image_url && (
-            <Image
-              src={selectedCard?.image_url}
-              alt={selectedCard?.title}
-              width={500}
-              height={500}
-            />
-          )}
-          <p>{selectedCard?.description}</p>
-        </Modal.Body>
-        <Modal.Footer>
-          {/* 削除 */}
-          <Button variant="danger" onClick={handleDeleteHair}>
-            削除
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      {selectedCard && (
+        <DisplayCard
+          show={showModal}
+          handleClose={handleCloseModal}
+          card={selectedCard}
+        />
+      )}
     </Container>
   )
 }
