@@ -16,6 +16,11 @@ export default function Contact() {
             サービスに関するお問い合わせ、ご質問ご相談、または運営者へのコンタクトは
             下記メールアドレス宛にお願い致します。
           </p>
+          <div className="text-center">
+            <a href="mailto:zubohair@gmail.com" className="text-center">
+              zubohair@gmail.com
+            </a>
+          </div>
         </div>
         <a
           className={`${styles['pointer-cursor']} underline hover:text-gray-900 text-center d-block my-3`}
