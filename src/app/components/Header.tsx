@@ -21,7 +21,10 @@ export default function Header({ session }: { session: Session | null }) {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="/#home">ズボヘア</Navbar.Brand>
+        <Navbar.Brand href="/">HairTurn</Navbar.Brand>
+        <Nav>
+          <Nav.Link href="/about">About</Nav.Link>
+        </Nav>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           {path !== '/login' && path !== '/signup' && (
