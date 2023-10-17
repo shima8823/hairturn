@@ -23,8 +23,9 @@ export default function DisplayCard(props: {
           <Image
             src={props.card?.image_url}
             alt={props.card?.title}
-            width={500}
-            height={500}
+            width={450}
+            height={450}
+            layout="responsive"
           />
         )}
         <p>{props.card?.description}</p>
