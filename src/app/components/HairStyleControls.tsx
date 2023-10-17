@@ -57,8 +57,13 @@ export default function HairStyleControls({
         />
       )}
 
-      <Button variant="primary" onClick={selectRandomCard}>
-        New Hair
+      <Button
+        variant="primary"
+        onClick={selectRandomCard}
+        className="mb-3 mt-3 mx-auto d-block"
+        style={{ width: '80%' }}
+      >
+        新しい髪型
       </Button>
       <div className="d-flex justify-content-end">
         {session && (
