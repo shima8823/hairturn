@@ -17,8 +17,8 @@ export default function Contact() {
             下記メールアドレス宛にお願い致します。
           </p>
           <div className="text-center">
-            <a href="mailto:zubohair@gmail.com" className="text-center">
-              zubohair@gmail.com
+            <a href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL}`}>
+              {process.env.NEXT_PUBLIC_CONTACT_EMAIL}
             </a>
           </div>
         </div>

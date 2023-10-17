@@ -91,8 +91,10 @@ export default function PrivacyPolicy() {
               本ポリシーに関するお問い合わせは下記のメールアドレスまでお願いいたします。
             </p>
             <p>
-              メールアドレス：{' '}
-              <a href="mailto:zubohair@gmail.com">zubohair@gmail.com</a>
+              メールアドレス：
+              <a href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL}`}>
+                {process.env.NEXT_PUBLIC_CONTACT_EMAIL}
+              </a>
             </p>
             2023年10月1日 制定
           </div>
