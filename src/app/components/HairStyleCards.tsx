@@ -111,13 +111,6 @@ export default function HairStyleCards({
                       <Dropdown.Menu>
                         <Dropdown.Item
                           onClick={() => {
-                            console.log('編集')
-                          }}
-                        >
-                          編集
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          onClick={() => {
                             handleDeleteHair(card)
                           }}
                         >
