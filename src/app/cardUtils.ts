@@ -4,31 +4,38 @@ interface cardData {
   description: string | null
 }
 
+const directory = '/assets/image/'
+
 const cardsData: cardData[] = [
   {
-    title: 'Card 1',
-    image_url: 'hair500.webp',
-    description: 'This is the content of Card 1.'
+    title: 'ツーブロック',
+    image_url: directory + 'block.png',
+    description: 'サイドを短く、トップを長くするスタイル'
   },
   {
-    title: 'Card 2',
-    image_url: 'hair1000.webp',
-    description: 'This is the content of Card 2.'
+    title: 'ロングヘア',
+    image_url: directory + 'long.png',
+    description: '長めの髪の毛をパーマにかけて、動きを出すスタイル'
   },
   {
-    title: 'Card 3',
-    image_url: '',
-    description: 'This is the content of Card 3.'
+    title: 'ソフトモヒカン',
+    image_url: directory + 'softmohawk.png',
+    description: 'サイドを短く、トップを長くするスタイル'
   },
   {
-    title: 'Card 4',
-    image_url: '',
-    description: 'This is the content of Card 4.'
+    title: 'アート',
+    image_url: directory + 'art.png',
+    description: ''
   },
   {
-    title: 'Card 5',
-    image_url: '',
-    description: 'This is the content of Card 5.'
+    title: 'ツートンカラー',
+    image_url: directory + 'two-tone.png',
+    description: 'カラー2色使うスタイル'
+  },
+  {
+    title: 'ポンパドール',
+    image_url: directory + 'pompadour.png',
+    description: 'トップを立たせるスタイル'
   }
 ]
 
