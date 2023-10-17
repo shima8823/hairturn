@@ -34,7 +34,7 @@ export default function Header({ session }: { session: Session | null }) {
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
-                <div>
+                <div className="d-flex" style={{ gap: '1rem' }}>
                   <Button variant="outline-success" href="/signup">
                     会員登録
                   </Button>
