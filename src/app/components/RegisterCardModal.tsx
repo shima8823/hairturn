@@ -23,14 +23,16 @@ export default function RegisterCardModal(props: {
   const router = useRouter()
   const [file, setFile] = useState<File | null>(null)
   const [imageURL, setImageURL] = useState<string | null>(null)
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState<string | null>('')
+  const [title, setTitle] = useState<string | null>(null)
+  const [description, setDescription] = useState<string | null>(null)
 
   const supabase = createClientComponentClient()
 
   const handleClose = () => {
     props.handleClose()
     setImageURL(null)
+    setTitle(null)
+    setDescription(null)
     setFile(null)
   }
 
@@ -62,6 +64,10 @@ export default function RegisterCardModal(props: {
   const handleSaveHair = async () => {
     console.log('handleSaveHair')
     var imageStoragePath = ''
+    if (!title) {
+      alert('タイトルを入力してください')
+      return
+    }
     if (file) {
       // supabase に保存、成功したらそのurlを取得してpublic.hairstylesに保存
 
