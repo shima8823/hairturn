@@ -87,15 +87,19 @@ export default function HairStyleCards({
     <Container>
       <Row>
         {cards.map((card, index) => (
-          <Col lg={4} md={6} sm={12} key={index}>
+          <Col
+            lg={4}
+            md={6}
+            sm={12}
+            key={index}
+            className="d-flex justify-content-center"
+          >
             <div className={styles.cardContainer}>
-              {' '}
-              {/* Apply fixed width and height to this container */}
               <Card onClick={() => handleCardClick(card)}>
                 <Card.Img
                   variant="top"
                   src={card.image_url ? card.image_url : ''}
-                  className={styles.cardImage} // Apply max-width and max-height to the image
+                  className={styles.cardImage}
                 />
                 <Card.Body>
                   <div className={styles.header}>
