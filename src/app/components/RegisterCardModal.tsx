@@ -127,7 +127,13 @@ export default function RegisterCardModal(props: {
           </Form.Group>
           {imageURL && (
             <div>
-              <Image src={imageURL} alt="Selected" width={500} height={500} />
+              <Image
+                src={imageURL}
+                alt="Selected"
+                width={450}
+                height={450}
+                layout="responsive"
+              />
             </div>
           )}
 
