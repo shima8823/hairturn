@@ -1,19 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import {
-  Card,
-  Row,
-  Col,
-  Container,
-  Button,
-  Modal,
-  Dropdown,
-  DropdownButton
-} from 'react-bootstrap'
+import { Card, Row, Col, Container, Dropdown } from 'react-bootstrap'
 import { cardData } from '../cardUtils'
 import styles from './HairStyleCards.module.css'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import {
   createClientComponentClient,
