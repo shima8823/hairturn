@@ -58,7 +58,7 @@ export default function Login() {
       </Button>
 
       <div className="text-center">
-        <a href="/signup">会員登録はこちら</a>
+        <a href="/signup">新規登録はこちら</a>
       </div>
     </Container>
   )
