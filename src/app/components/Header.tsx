@@ -39,7 +39,7 @@ export default function Header({ session }: { session: Session | null }) {
               ) : (
                 <div className="d-flex" style={{ gap: '1rem' }}>
                   <Button variant="outline-success" href="/signup">
-                    会員登録
+                    新規登録
                   </Button>
                   <Button variant="outline-success" href="/login">
                     ログイン
