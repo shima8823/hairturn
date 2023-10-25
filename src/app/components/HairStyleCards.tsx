@@ -1,19 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import {
-  Card,
-  Row,
-  Col,
-  Container,
-  Button,
-  Modal,
-  Dropdown,
-  DropdownButton
-} from 'react-bootstrap'
+import { Card, Row, Col, Container, Dropdown } from 'react-bootstrap'
 import { cardData } from '../cardUtils'
 import styles from './HairStyleCards.module.css'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import {
   createClientComponentClient,
@@ -87,15 +77,19 @@ export default function HairStyleCards({
     <Container>
       <Row>
         {cards.map((card, index) => (
-          <Col lg={4} md={6} sm={12} key={index}>
+          <Col
+            lg={4}
+            md={6}
+            sm={12}
+            key={index}
+            className="d-flex justify-content-center"
+          >
             <div className={styles.cardContainer}>
-              {' '}
-              {/* Apply fixed width and height to this container */}
               <Card onClick={() => handleCardClick(card)}>
                 <Card.Img
                   variant="top"
                   src={card.image_url ? card.image_url : ''}
-                  className={styles.cardImage} // Apply max-width and max-height to the image
+                  className={styles.cardImage}
                 />
                 <Card.Body>
                   <div className={styles.header}>
@@ -109,13 +103,6 @@ export default function HairStyleCards({
                       </Dropdown.Toggle>
 
                       <Dropdown.Menu>
-                        <Dropdown.Item
-                          onClick={() => {
-                            console.log('編集')
-                          }}
-                        >
-                          編集
-                        </Dropdown.Item>
                         <Dropdown.Item
                           onClick={() => {
                             handleDeleteHair(card)

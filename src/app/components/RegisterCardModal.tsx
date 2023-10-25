@@ -1,27 +1,15 @@
 'use client'
-import {
-  Navbar,
-  Nav,
-  NavDropdown,
-  Container,
-  Button,
-  Modal,
-  Form
-} from 'react-bootstrap'
-import { CardContext } from './CardContext'
+import { Button, Modal, Form } from 'react-bootstrap'
 import { useState } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import {
   createClientComponentClient,
   Session
 } from '@supabase/auth-helpers-nextjs'
 import Image from 'next/image'
 
-import type { Database } from '@/lib/database.types'
 import { cardData } from '../cardUtils'
 import crypto from 'crypto'
-
-// supabase storageからdownloadする関数
 
 function generateSecureRandomString(length: number): string {
   return crypto.randomBytes(length).toString('hex').slice(0, length)
@@ -35,14 +23,16 @@ export default function RegisterCardModal(props: {
   const router = useRouter()
   const [file, setFile] = useState<File | null>(null)
   const [imageURL, setImageURL] = useState<string | null>(null)
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState<string | null>('')
+  const [title, setTitle] = useState<string | null>(null)
+  const [description, setDescription] = useState<string | null>(null)
 
   const supabase = createClientComponentClient()
 
   const handleClose = () => {
     props.handleClose()
     setImageURL(null)
+    setTitle(null)
+    setDescription(null)
     setFile(null)
   }
 
@@ -54,11 +44,9 @@ export default function RegisterCardModal(props: {
     const fileObj = e.target.files[0]
     if (fileObj) {
       const src = URL.createObjectURL(fileObj)
-      //   console.log('file.name: ', file.name)
       setFile(fileObj)
       setImageURL(src)
       console.log('handleImageChange3')
-      //   setFile(file)
     }
   }
   async function fetchImage(bucket: string, path: string): Promise<string> {
@@ -76,6 +64,10 @@ export default function RegisterCardModal(props: {
   const handleSaveHair = async () => {
     console.log('handleSaveHair')
     var imageStoragePath = ''
+    if (!title) {
+      alert('タイトルを入力してください')
+      return
+    }
     if (file) {
       // supabase に保存、成功したらそのurlを取得してpublic.hairstylesに保存
 
@@ -124,27 +116,26 @@ export default function RegisterCardModal(props: {
   return (
     <Modal show={props.show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
+        <Modal.Title>カードを登録</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
-          {/* Image Input */}
           <Form.Group className="mb-3">
             <Form.Label>Upload Image</Form.Label>
             <Form.Control type="file" onChange={handleImageChange} />
           </Form.Group>
           {imageURL && (
             <div>
-              <Image src={imageURL} alt="Selected" width={500} height={500} />
+              <Image
+                src={imageURL}
+                alt="Selected"
+                width={450}
+                height={450}
+                layout="responsive"
+              />
             </div>
-            // <img
-            //   src={imageURL}
-            //   alt="Selected"
-            //   style={{ maxWidth: '100%', height: 'auto' }}
-            // />
           )}
 
-          {/* Title Input */}
           <Form.Group className="mb-3">
             <Form.Label>Title</Form.Label>
             <Form.Control
@@ -154,7 +145,6 @@ export default function RegisterCardModal(props: {
             />
           </Form.Group>
 
-          {/* Description Input */}
           <Form.Group className="mb-3">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -167,11 +157,8 @@ export default function RegisterCardModal(props: {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Close
-        </Button>
         <Button variant="primary" onClick={handleSaveHair}>
-          Save Changes
+          Save
         </Button>
       </Modal.Footer>
     </Modal>

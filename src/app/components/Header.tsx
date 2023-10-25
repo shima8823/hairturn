@@ -1,7 +1,5 @@
 'use client'
 import { Navbar, Nav, NavDropdown, Container, Button } from 'react-bootstrap'
-import { CardContext } from './CardContext'
-import { useContext } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import {
   createClientComponentClient,
@@ -11,7 +9,6 @@ import {
 import type { Database } from '@/lib/database.types'
 
 export default function Header({ session }: { session: Session | null }) {
-  const { selectRandomCard } = useContext(CardContext)
   const path = usePathname()
   const supabase = createClientComponentClient<Database>()
   const router = useRouter()
@@ -24,7 +21,10 @@ export default function Header({ session }: { session: Session | null }) {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="/#home">ズボヘア</Navbar.Brand>
+        <Navbar.Brand href="/">HairTurn</Navbar.Brand>
+        <Nav>
+          <Nav.Link href="/about">About</Nav.Link>
+        </Nav>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           {path !== '/login' && path !== '/signup' && (
@@ -32,19 +32,14 @@ export default function Header({ session }: { session: Session | null }) {
               <Nav className="me-auto"></Nav>
               {session ? (
                 <NavDropdown title="マイページ" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.2">
-                    hairstyle history
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.1">設定</NavDropdown.Item>
                   <NavDropdown.Item onClick={handleLogout}>
                     ログアウト
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
-                <div>
+                <div className="d-flex" style={{ gap: '1rem' }}>
                   <Button variant="outline-success" href="/signup">
-                    会員登録
+                    新規登録
                   </Button>
                   <Button variant="outline-success" href="/login">
                     ログイン

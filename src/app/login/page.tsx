@@ -59,25 +59,6 @@ export default function Login() {
 
       <div className="text-center">
         <a href="/signup">会員登録はこちら</a>
-        <p>or sign up with:</p>
-
-        <div
-          className="d-flex justify-content-between mx-auto"
-          style={{ width: '40%' }}
-        >
-          <Button variant="outline-primary" className="m-1">
-            <i className="fab fa-facebook-f"></i>
-          </Button>
-          <Button variant="outline-primary" className="m-1">
-            <i className="fab fa-twitter"></i>
-          </Button>
-          <Button variant="outline-primary" className="m-1">
-            <i className="fab fa-google"></i>
-          </Button>
-          <Button variant="outline-primary" className="m-1">
-            <i className="fab fa-github"></i>
-          </Button>
-        </div>
       </div>
     </Container>
   )

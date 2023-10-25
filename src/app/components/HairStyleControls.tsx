@@ -60,32 +60,23 @@ export default function HairStyleControls({
       <Button
         variant="primary"
         onClick={selectRandomCard}
-        // className={styles['random-button']}
+        className="mb-3 mt-3 mx-auto d-block"
+        style={{ width: '50%' }}
       >
-        New Hair
+        新しい髪型
       </Button>
-      {/* 右寄り */}
-      <div className="d-flex justify-content-end">
-        {/* 検索バー */}
-        <input
-          type="text"
-          placeholder="Search.."
-          name="search"
-          className="mr-3"
-        />
-        {/* ソート */}
-        <select name="cars" id="cars" className="mr-3">
-          <option value="volvo">New</option>
-          <option value="saab">Old</option>
-        </select>
-        {/* New Card modal */}
-
-        {session && (
-          <Button variant="primary" onClick={handleShow}>
+      {session && (
+        <div className="d-flex justify-content-end">
+          <Button
+            variant="outline-secondary"
+            onClick={handleShow}
+            className="mb-3 mt-3 mx-auto d-block"
+            style={{ width: '50%' }}
+          >
             追加
           </Button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }

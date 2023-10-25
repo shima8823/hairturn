@@ -1,0 +1,15 @@
+.large-text {
+  font-size: 22px;
+}
+
+.image-style {
+  margin: 20px;
+  width: calc(100% - 40px);
+  height: auto;
+}
+
+.service-point {
+  background-color: #dadada;
+  max-width: 70%;
+  margin: 0 auto;
+}

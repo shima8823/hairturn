@@ -51,6 +51,26 @@ export default async function HairStyleCardsServer() {
     <div>
       <HairStyleControls cards={cards} session={session} />
       <HairStyleCards cards={cards} session={session} />
+      <div
+        className="d-flex justify-content-center mt-4 mb-4"
+        style={{ gap: '1rem' }}
+      >
+        <a
+          href="/terms-of-use"
+          style={{ color: 'gray', textDecoration: 'none' }}
+        >
+          利用規約
+        </a>
+        <a
+          href="/privacy-policy"
+          style={{ color: 'gray', textDecoration: 'none' }}
+        >
+          プライバシーポリシー
+        </a>
+        <a href="/contact" style={{ color: 'gray', textDecoration: 'none' }}>
+          お問い合わせ
+        </a>
+      </div>
     </div>
   )
 }
