@@ -116,11 +116,10 @@ export default function RegisterCardModal(props: {
   return (
     <Modal show={props.show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
+        <Modal.Title>カードを登録</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
-          {/* Image Input */}
           <Form.Group className="mb-3">
             <Form.Label>Upload Image</Form.Label>
             <Form.Control type="file" onChange={handleImageChange} />
@@ -158,11 +157,8 @@ export default function RegisterCardModal(props: {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Close
-        </Button>
         <Button variant="primary" onClick={handleSaveHair}>
-          Save Changes
+          Save
         </Button>
       </Modal.Footer>
     </Modal>
