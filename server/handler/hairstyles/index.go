@@ -38,19 +38,29 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	req.UserId = id
-	println("req: ", req.ImageURL, req.Title, req.Description)
-	_, err = h.HairStyleRepo.Create(r.Context(), &req)
-	if err != nil {
-		println("create error")
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+	if req.Title == "" {
+		http.Error(w, "title is required", http.StatusBadRequest)
 		return
 	}
 
-	// TODO: json response
+	res, err := h.HairStyleRepo.Create(r.Context(), &req)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	affected, err := res.RowsAffected()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	if affected == 0 {
+		http.Error(w, "failed to create", http.StatusInternalServerError)
+		return
+	}
+
 	w.WriteHeader(http.StatusCreated)
 
-
-
+	// TODO: json response
 }
 
 
