@@ -30,6 +30,16 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	records, err := h.HairStyleRepo.Retrieve(r.Context(), id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	if len(records) >= 6 {
+		http.Error(w, "too many hairstyles", http.StatusBadRequest)
+		return
+	}
+
 	var req object.HairStyle
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {

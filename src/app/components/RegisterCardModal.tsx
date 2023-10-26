@@ -169,6 +169,7 @@ export default function RegisterCardModal(props: {
         </Form>
       </Modal.Body>
       <Modal.Footer>
+        <p className="mb-2 mt-2 mx-auto d-block">※最大6種類まで登録できます</p>
         <Button variant="primary" onClick={handleSaveHair}>
           Save
         </Button>
