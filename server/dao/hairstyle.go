@@ -23,8 +23,6 @@ func (r *hairstyle) Create(ctx context.Context, hairstyle *object.HairStyle) (sq
 	var create string
 	var args []interface{}
 
-	println("create hairstyle.ImageURL: ", *hairstyle.ImageURL, " hairstyle.Description: ", *hairstyle.Description)
-
 	if hairstyle.ImageURL != nil && hairstyle.Description != nil {
 		create = "INSERT INTO hairstyles (user_id, title, image_url, description) VALUES ($1, $2, $3, $4)"
 		args = []interface{}{hairstyle.UserId, hairstyle.Title, *hairstyle.ImageURL, *hairstyle.Description}
