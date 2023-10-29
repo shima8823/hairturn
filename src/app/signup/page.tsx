@@ -58,7 +58,6 @@ export default function Signup() {
         alert(error.error_description || error.message)
       })
   }
-  //   95XCNwDZ5s3#DD@
   return (
     <Container className="p-3 my-5 d-flex flex-column w-50">
       <Form onSubmit={handleSignUp}>
