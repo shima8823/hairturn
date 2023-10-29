@@ -105,7 +105,19 @@ export default function RegisterCardModal(props: {
       body: JSON.stringify(newCard)
     })
     if (!res.ok) {
-      console.log(res.status)
+      alert('登録に失敗しました')
+      if (newCard.image_url) {
+        const fileName = newCard.image_url.split('/').pop()
+        if (fileName) {
+          const { data, error } = await supabase.storage
+            .from('hairstyles')
+            .remove([props.session.user.id + '/' + fileName])
+
+          if (error) {
+            return
+          }
+        }
+      }
       return
     }
     console.log('handleSaveHair end')
@@ -157,6 +169,7 @@ export default function RegisterCardModal(props: {
         </Form>
       </Modal.Body>
       <Modal.Footer>
+        <p className="mb-2 mt-2 mx-auto d-block">※最大6種類まで登録できます</p>
         <Button variant="primary" onClick={handleSaveHair}>
           Save
         </Button>

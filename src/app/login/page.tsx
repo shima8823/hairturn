@@ -49,7 +49,7 @@ export default function Login() {
           <Form.Check label="Remember me" />
         </Col>
         <Col className="text-end">
-          <a href="!#">パスワードを忘れた方</a>
+          <a href="/password-reset/request">パスワードを忘れた方</a>
         </Col>
       </Row>
 
@@ -58,7 +58,7 @@ export default function Login() {
       </Button>
 
       <div className="text-center">
-        <a href="/signup">会員登録はこちら</a>
+        <a href="/signup">新規登録はこちら</a>
       </div>
     </Container>
   )

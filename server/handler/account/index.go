@@ -25,9 +25,18 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, err := h.AccountRepo.Create(r.Context(), req.Id)
+	res, err := h.AccountRepo.Create(r.Context(), req.Id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	affected, err := res.RowsAffected()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	if affected == 0 {
+		http.Error(w, "failed to create", http.StatusInternalServerError)
 		return
 	}
 

@@ -20,7 +20,7 @@ export default async function HairStyleCardsServer() {
   if (session) {
     // apiを叩いてデータを取得 // cookieを使って認証
 
-    const res = await fetch('http://localhost:3000/api/hairstyles', {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/hairstyles', {
       method: 'GET',
       headers: {
         Cookie: cookies().toString()

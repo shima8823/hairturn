@@ -2,20 +2,15 @@ package server
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
+	"os"
 	"zubohair/server/domain/object"
 )
 
 func Authenticate(w http.ResponseWriter,r *http.Request) (string, error) {
-	scheme := "http"
-    if r.TLS != nil {
-        scheme = "https"
-    }
-    baseURL := fmt.Sprintf("%s://%s", scheme, "localhost:3000")
-	// println("baseURL:", baseURL)
+	apiURL := os.Getenv("API_URL")
 
-	req, err := http.NewRequest("GET", baseURL + "/auth", nil)
+	req, err := http.NewRequest("GET", apiURL + "/auth", nil)
 	if err != nil {
 		println("new request error")
 		return "", err
