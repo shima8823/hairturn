@@ -46,9 +46,6 @@ export default function Login() {
 
       <Row className="d-flex justify-content-between mx-3 mb-4">
         <Col>
-          <Form.Check label="Remember me" />
-        </Col>
-        <Col className="text-end">
           <a href="/password-reset/request">パスワードを忘れた方</a>
         </Col>
       </Row>
