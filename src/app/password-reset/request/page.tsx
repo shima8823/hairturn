@@ -11,6 +11,10 @@ export default function PasswordReset() {
   const supabase = createClientComponentClient()
   const [email, setEmail] = useState<string>('')
 
+  console.log(
+    'process.env.NEXT_PUBLIC_APP_URL: ' + process.env.NEXT_PUBLIC_APP_URL
+  )
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
