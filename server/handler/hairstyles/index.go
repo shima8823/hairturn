@@ -21,7 +21,6 @@ func NewHandler(hairStyleRepo repository.HairStyle) *Handler {
 func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 	id, err := server.Authenticate(w, r)
 	if err != nil {
-		println("authenticate error")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -77,7 +76,6 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) Retrieve(w http.ResponseWriter, r *http.Request) {
 	id, err := server.Authenticate(w, r)
 	if err != nil {
-		println("authenticate error")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -88,7 +86,6 @@ func (h *Handler) Retrieve(w http.ResponseWriter, r *http.Request) {
 
 	res, err := h.HairStyleRepo.Retrieve(r.Context(), id)
 	if err != nil {
-		println("retrieve error")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -96,7 +93,6 @@ func (h *Handler) Retrieve(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	if err := json.NewEncoder(w).Encode(res); err != nil {
-		println("encode error")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -105,7 +101,6 @@ func (h *Handler) Retrieve(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 	id, err := server.Authenticate(w, r)
 	if err != nil {
-		println("authenticate error")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -123,7 +118,6 @@ func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 
 	err = h.HairStyleRepo.Delete(r.Context(), req.Title)
 	if err != nil {
-		println("delete error")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

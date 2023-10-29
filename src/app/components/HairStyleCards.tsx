@@ -18,7 +18,6 @@ export default function HairStyleCards({
   cards: cardData[]
   session: Session | null
 }) {
-  console.log('HairStyleCards: ', cards)
   const [showModal, setShowModal] = useState(false)
   const [selectedCard, setSelectedCard] = useState<cardData | null>(null)
   const supabase = createClientComponentClient()
@@ -35,7 +34,6 @@ export default function HairStyleCards({
   }
 
   const handleDeleteHair = async (card: cardData) => {
-    console.log('handleDeleteHair')
     if (!card || !session) return
 
     // hairstylesテーブルから削除して、storageからも削除する
@@ -43,14 +41,13 @@ export default function HairStyleCards({
     const url = card.image_url
     if (url) {
       const fileName = url.split('/').pop()
-      console.log('fileName: ', fileName)
       if (fileName) {
         const { data, error } = await supabase.storage
           .from('hairstyles')
           .remove([session.user.id + '/' + fileName])
 
         if (error) {
-          console.log('error: ', error)
+          alert('画像の削除に失敗しました。')
           return
         }
       }
@@ -65,10 +62,8 @@ export default function HairStyleCards({
       body: JSON.stringify(card)
     })
     if (!res.ok) {
-      console.log(res.status)
       return
     }
-    console.log('handleDeleteHair end')
     handleCloseModal()
     router.refresh()
   }

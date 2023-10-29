@@ -41,7 +41,6 @@ const cardsData: cardData[] = [
 
 export const selectRandomCard = () => {
   const randomCard = cardsData[Math.floor(Math.random() * cardsData.length)]
-  console.log(randomCard)
   return randomCard
 }
 

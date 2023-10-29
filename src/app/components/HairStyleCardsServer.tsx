@@ -8,13 +8,10 @@ import HairStyleControls from './HairStyleControls'
 type Hairstyle = Database['public']['Tables']['hairstyles']['Row']
 export default async function HairStyleCardsServer() {
   const supabase = createServerComponentClient({ cookies })
-  console.log('HairStyleCardsServer')
-
   const {
     data: { session }
   } = await supabase.auth.getSession()
 
-  //  sessionからユーザーの髪型を取得
   var cards: cardData[] = []
 
   if (session) {
@@ -27,7 +24,6 @@ export default async function HairStyleCardsServer() {
       }
     })
     if (!res.ok) {
-      console.log(res.status)
       return
     }
     const json = await res.json()
@@ -40,11 +36,9 @@ export default async function HairStyleCardsServer() {
         }
         cards.push(newCard)
       })
-      console.log(cards)
     }
   } else {
     cards = cardsData
-    console.log(cards)
   }
 
   return (

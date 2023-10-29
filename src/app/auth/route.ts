@@ -9,12 +9,10 @@ export async function GET(request: Request) {
     cookies
   })
 
-  console.log('cookies', cookies)
   const {
     data: { session }
   } = await supabase.auth.getSession()
   if (!session) {
-    console.log('session', session)
     return NextResponse.redirect(new URL('/login', request.url).href)
   }
 

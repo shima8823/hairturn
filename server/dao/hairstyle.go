@@ -40,7 +40,6 @@ func (r *hairstyle) Create(ctx context.Context, hairstyle *object.HairStyle) (sq
 	result, err := r.db.ExecContext(ctx, create, args...)
 
 	if err != nil {
-		println("exec error", err.Error())
 		return nil, err
 	}
 	return result, nil
@@ -53,7 +52,6 @@ func (r *hairstyle) Retrieve(ctx context.Context, user_id string) ([]*object.Hai
 	var err error
 	rows, err = r.db.QueryContext(ctx, retrieve, user_id)
 	if err != nil {
-		println("query context error")
 		if err == sql.ErrNoRows {
 			return nil, nil
 		}
@@ -67,7 +65,6 @@ func (r *hairstyle) Retrieve(ctx context.Context, user_id string) ([]*object.Hai
 	for rows.Next() {
 		var hairstyle object.HairStyle
 		if err := rows.Scan(&hairstyle.Id, &hairstyle.UserId, &hairstyle.ImageURL, &hairstyle.Title, &hairstyle.Description, &hairstyle.CreatedAt, &hairstyle.UpdatedAt); err != nil {
-			println("scan error")
 			return nil, err
 		}
 		

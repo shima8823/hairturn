@@ -37,32 +37,21 @@ export default function RegisterCardModal(props: {
   }
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('handleImageChange')
     if (!e.target.files) return
-    console.log('handleImageChange2')
 
     const fileObj = e.target.files[0]
     if (fileObj) {
       const src = URL.createObjectURL(fileObj)
       setFile(fileObj)
       setImageURL(src)
-      console.log('handleImageChange3')
     }
   }
   async function fetchImage(bucket: string, path: string): Promise<string> {
-    console.log('fetchImage')
-    console.log('bucket: ', bucket)
-    console.log('path: ', path)
-
     const { data } = supabase.storage.from(bucket).getPublicUrl(path)
-
-    console.log('data: ', data)
-    console.log('fetchImage end')
     return data.publicUrl
   }
 
   const handleSaveHair = async () => {
-    console.log('handleSaveHair')
     var imageStoragePath = ''
     if (!title) {
       alert('タイトルを入力してください')
@@ -70,32 +59,23 @@ export default function RegisterCardModal(props: {
     }
     if (file) {
       // supabase に保存、成功したらそのurlを取得してpublic.hairstylesに保存
-
       const randomFileName = generateSecureRandomString(15)
       const saveStoragePath = props.session.user.id + '/' + randomFileName
       const { data, error } = await supabase.storage
         .from('hairstyles')
         .upload(saveStoragePath, file)
       if (error) {
-        console.log(error)
+        alert('画像の保存に失敗しました')
         return
       }
-
-      console.log('data: ', data)
-      console.log('imageURL: ', imageURL)
-
       imageStoragePath = await fetchImage('hairstyles', saveStoragePath)
     }
-
-    console.log('after fetchImage')
-    console.log('imageStoragePath: ', imageStoragePath)
 
     const newCard: cardData = {
       image_url: imageStoragePath ? imageStoragePath : '',
       title: title,
       description: description
     }
-    console.log(newCard)
 
     const res = await fetch('/api/hairstyles', {
       method: 'POST',
@@ -120,7 +100,6 @@ export default function RegisterCardModal(props: {
       }
       return
     }
-    console.log('handleSaveHair end')
     handleClose()
     router.refresh()
   }

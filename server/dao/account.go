@@ -25,7 +25,6 @@ func (r *account) Create(ctx context.Context, id string) (sql.Result, error) {
 	if err != nil {
 		return nil, err
 	}
-	println("id:", id)
 	return result, nil
 }
 

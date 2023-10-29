@@ -18,7 +18,6 @@ export default function HairStyleControls({
   const [showRandomCard, setShowRandomCard] = useState(false)
   const [selectedCard, setSelectedCard] = useState<cardData | null>(null)
   const selectRandomCard = () => {
-    console.log('selectRandomCard')
     setSelectedCard(cards[Math.floor(Math.random() * cards.length)])
     setShowRandomCard(true)
   }
@@ -32,13 +31,11 @@ export default function HairStyleControls({
 
   const handleShow = () => {
     setShow(true)
-    console.log('show')
   }
 
   const handleClose = () => {
     setShow(false)
   }
-  console.log(session === null)
 
   return (
     <div>
