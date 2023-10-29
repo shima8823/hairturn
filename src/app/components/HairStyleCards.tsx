@@ -54,7 +54,7 @@ export default function HairStyleCards({
     }
 
     // hairstylesテーブルから削除
-    const res = await fetch('http://localhost:3000/api/hairstyles', {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/hairstyles', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
