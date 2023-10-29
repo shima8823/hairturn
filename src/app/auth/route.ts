@@ -5,8 +5,9 @@ import { cookies } from 'next/headers'
 import type { Database } from '@/lib/database.types'
 
 export async function GET(request: Request) {
+  const cookieStore = cookies()
   const supabase = createRouteHandlerClient<Database>({
-    cookies
+    cookies: () => cookieStore
   })
 
   const {

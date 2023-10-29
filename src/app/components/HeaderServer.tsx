@@ -3,7 +3,8 @@ import { cookies } from 'next/headers'
 import Header from './Header'
 
 export default async function HeaderServer() {
-  const supabase = createServerComponentClient({ cookies })
+  const cookieStore = cookies()
+  const supabase = createServerComponentClient({ cookies: () => cookieStore })
 
   const {
     data: { session }

@@ -7,7 +7,8 @@ import HairStyleControls from './HairStyleControls'
 
 type Hairstyle = Database['public']['Tables']['hairstyles']['Row']
 export default async function HairStyleCardsServer() {
-  const supabase = createServerComponentClient({ cookies })
+  const cookieStore = cookies()
+  const supabase = createServerComponentClient({ cookies: () => cookieStore })
   const {
     data: { session }
   } = await supabase.auth.getSession()
@@ -20,7 +21,7 @@ export default async function HairStyleCardsServer() {
     const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/hairstyles', {
       method: 'GET',
       headers: {
-        Cookie: cookies().toString()
+        Cookie: cookieStore.toString()
       }
     })
     if (!res.ok) {
