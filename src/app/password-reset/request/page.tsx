@@ -14,7 +14,7 @@ export default function PasswordReset() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: process.env.NEXT_PUBLIC_API_URL + '/password-reset/confirm'
+      redirectTo: process.env.NEXT_PUBLIC_APP_URL + '/password-reset/confirm'
     })
 
     if (error) {
