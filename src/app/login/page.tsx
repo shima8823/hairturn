@@ -13,7 +13,8 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const supabase = createClientComponentClient<Database>()
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password
@@ -27,32 +28,36 @@ export default function Login() {
 
   return (
     <Container className="p-3 my-5 d-flex flex-column w-50">
-      <Form.Group className="mb-4">
-        <Form.Label>メールアドレス</Form.Label>
-        <Form.Control
-          type="email"
-          placeholder="mail@example.com"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </Form.Group>
+      <Form onSubmit={handleLogin}>
+        <Form.Group className="mb-4">
+          <Form.Label>メールアドレス</Form.Label>
+          <Form.Control
+            autoComplete="username"
+            type="email"
+            placeholder="m@example.com"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </Form.Group>
 
-      <Form.Group className="mb-4">
-        <Form.Label>パスワード</Form.Label>
-        <Form.Control
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </Form.Group>
+        <Form.Group className="mb-4">
+          <Form.Label>パスワード</Form.Label>
+          <Form.Control
+            autoComplete="current-password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Form.Group>
 
-      <Row className="d-flex justify-content-between mx-3 mb-4">
-        <Col>
-          <a href="/password-reset/request">パスワードを忘れた方</a>
-        </Col>
-      </Row>
+        <Row className="d-flex justify-content-between mx-3 mb-4">
+          <Col>
+            <a href="/password-reset/request">パスワードを忘れた方</a>
+          </Col>
+        </Row>
 
-      <Button className="mb-4" onClick={handleLogin}>
-        ログイン
-      </Button>
+        <Button className="mb-4" type="submit">
+          ログイン
+        </Button>
+      </Form>
 
       <div className="text-center">
         <a href="/signup">新規登録はこちら</a>

@@ -19,7 +19,8 @@ export default function Signup() {
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/
 
-  const handleSignUp = async () => {
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     if (!emailRegex.test(email)) {
       alert('正しいメールアドレスを入力してください')
       return
@@ -48,6 +49,7 @@ export default function Signup() {
               id: data.data.user?.id
             })
           }).then(() => {
+            alert('メールアドレス確認メールを送信しました。')
             router.back()
           })
         }
@@ -56,37 +58,44 @@ export default function Signup() {
         alert(error.error_description || error.message)
       })
   }
-
+  //   95XCNwDZ5s3#DD@
   return (
     <Container className="p-3 my-5 d-flex flex-column w-50">
-      <Form.Group className="mb-4">
-        <Form.Label>メールアドレス</Form.Label>
-        <Form.Control
-          type="email"
-          placeholder="mail@example.com"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </Form.Group>
+      <Form onSubmit={handleSignUp}>
+        <Form.Group className="mb-4">
+          <Form.Label>メールアドレス</Form.Label>
+          <Form.Control
+            id="email"
+            type="email"
+            required
+            placeholder="m@example.com"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </Form.Group>
 
-      <Form.Group className="mb-4">
-        <Form.Label>パスワード</Form.Label>
-        <Form.Control
-          type={showPassword ? 'text' : 'password'}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <InputGroup>
-          <Button
-            variant="outline-secondary"
-            onClick={() => setShowPassword(!showPassword)}
-          >
-            {showPassword ? 'Hide' : 'Show'}
-          </Button>
-        </InputGroup>
-      </Form.Group>
+        <Form.Group className="mb-4">
+          <Form.Label>パスワード</Form.Label>
+          <Form.Control
+            id="password"
+            required
+            autoComplete="new-password"
+            type={showPassword ? 'text' : 'password'}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <InputGroup>
+            <Button
+              variant="outline-secondary"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? 'Hide' : 'Show'}
+            </Button>
+          </InputGroup>
+        </Form.Group>
 
-      <Button className="mb-4" onClick={handleSignUp}>
-        同意して登録する
-      </Button>
+        <Button className="mb-4" type="submit">
+          同意して登録する
+        </Button>
+      </Form>
 
       <div className="text-center">
         <p>

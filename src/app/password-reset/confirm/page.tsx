@@ -44,6 +44,7 @@ export default function Confirm() {
             <Form.Control
               id="newPassword"
               required
+              autoComplete="new-password"
               type="password"
               onChange={(e) => setNewPassword(e.target.value)}
             />
