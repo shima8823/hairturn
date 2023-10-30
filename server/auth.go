@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"os"
-	"zubohair/server/domain/object"
+	"hairturn/server/domain/object"
 )
 
 func Authenticate(w http.ResponseWriter,r *http.Request) (string, error) {

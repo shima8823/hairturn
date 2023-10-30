@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 	"database/sql"
-	"zubohair/server/domain/object"
+	"hairturn/server/domain/object"
 )
 
 type Account interface {

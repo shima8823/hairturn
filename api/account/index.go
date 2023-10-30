@@ -2,8 +2,8 @@ package api
 
 import (
 	"net/http"
-	"zubohair/server/dao"
-	"zubohair/server/handler/account"
+	"hairturn/server/dao"
+	"hairturn/server/handler/account"
 
 	"github.com/jmoiron/sqlx"
 )

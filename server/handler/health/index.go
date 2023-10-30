@@ -3,7 +3,7 @@ package health
 import (
 	"encoding/json"
 	"net/http"
-	"zubohair/server/dao"
+	"hairturn/server/dao"
 	"github.com/jmoiron/sqlx"
 	"log"
 )

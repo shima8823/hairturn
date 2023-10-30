@@ -3,8 +3,8 @@ package dao
 import (
 	"context"
 	"database/sql"
-	"zubohair/server/domain/object"
-	"zubohair/server/domain/repository"
+	"hairturn/server/domain/object"
+	"hairturn/server/domain/repository"
 
 	"github.com/jmoiron/sqlx"
 )

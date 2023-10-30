@@ -1,7 +1,7 @@
 package dao
 
 import (
-	"zubohair/server/domain/repository"
+	"hairturn/server/domain/repository"
 
 	"github.com/jmoiron/sqlx"
 )

@@ -3,8 +3,8 @@ package account
 import (
 	"encoding/json"
 	"net/http"
-	"zubohair/server/domain/object"
-	"zubohair/server/domain/repository"
+	"hairturn/server/domain/object"
+	"hairturn/server/domain/repository"
 )
 
 type Handler struct {

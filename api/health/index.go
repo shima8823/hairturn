@@ -2,7 +2,7 @@ package api
 
 import (
 	"net/http"
-	"zubohair/server/handler/health"
+	"hairturn/server/handler/health"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {

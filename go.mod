@@ -1,4 +1,4 @@
-module zubohair
+module hairturn
 
 go 1.20
 

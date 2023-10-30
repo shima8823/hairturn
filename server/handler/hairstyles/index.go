@@ -3,9 +3,9 @@ package hairstyles
 import (
 	"encoding/json"
 	"net/http"
-	"zubohair/server"
-	"zubohair/server/domain/object"
-	"zubohair/server/domain/repository"
+	"hairturn/server"
+	"hairturn/server/domain/object"
+	"hairturn/server/domain/repository"
 )
 
 type Handler struct {
