@@ -72,7 +72,7 @@ export default function RegisterCardModal(props: {
     }
 
     const newCard: cardData = {
-      image_url: imageStoragePath ? imageStoragePath : '',
+      image_url: imageStoragePath ? imageStoragePath : null,
       title: title,
       description: description
     }
