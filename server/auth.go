@@ -8,7 +8,7 @@ import (
 )
 
 func Authenticate(w http.ResponseWriter,r *http.Request) (string, error) {
-	apiURL := os.Getenv("API_URL")
+	apiURL := os.Getenv("APP_URL")
 
 	req, err := http.NewRequest("GET", apiURL + "/auth", nil)
 	if err != nil {
