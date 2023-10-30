@@ -114,6 +114,9 @@ export default function RegisterCardModal(props: {
           <Form.Group className="mb-3">
             <Form.Label>Upload Image</Form.Label>
             <Form.Control type="file" onChange={handleImageChange} />
+            <Form.Text className="text-muted">
+              ※有効なファイルサイズは1MB以下です
+            </Form.Text>
           </Form.Group>
           {imageURL && (
             <div>
