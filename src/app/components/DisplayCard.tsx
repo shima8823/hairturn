@@ -2,7 +2,7 @@
 import { Modal } from 'react-bootstrap'
 import Image from 'next/image'
 
-import { cardData } from '../cardUtils'
+import { cardData } from '../../lib/card-data'
 
 export default function DisplayCard(props: {
   show: boolean

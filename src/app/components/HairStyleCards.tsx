@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Card, Row, Col, Container, Dropdown } from 'react-bootstrap'
-import { cardData } from '../cardUtils'
+import { cardData } from '../../lib/card-data'
 import styles from './HairStyleCards.module.css'
 import { useRouter } from 'next/navigation'
 import {

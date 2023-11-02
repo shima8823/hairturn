@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Button } from 'react-bootstrap'
-import { cardData } from '../cardUtils'
+import { cardData } from '../../lib/card-data'
 import RegisterCardModal from './RegisterCardModal'
 import { Session } from '@supabase/supabase-js'
 import DisplayCard from './DisplayCard'

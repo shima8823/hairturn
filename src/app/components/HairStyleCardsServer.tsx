@@ -2,7 +2,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import HairStyleCards from './HairStyleCards'
 import { Database } from '@/lib/database.types'
-import { cardData, cardsData } from '../cardUtils'
+import { cardData, cardsData } from '../../lib/card-data'
 import HairStyleControls from './HairStyleControls'
 
 type Hairstyle = Database['public']['Tables']['hairstyles']['Row']

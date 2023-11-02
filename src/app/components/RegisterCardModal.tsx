@@ -8,7 +8,7 @@ import {
 } from '@supabase/auth-helpers-nextjs'
 import Image from 'next/image'
 
-import { cardData } from '../cardUtils'
+import { cardData } from '../../lib/card-data'
 import crypto from 'crypto'
 
 function generateSecureRandomString(length: number): string {
