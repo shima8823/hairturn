@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 import type { Database } from '@/lib/database.types'
+import { passwordPattern } from '@/lib/user'
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false)
@@ -15,23 +16,8 @@ export default function Signup() {
   const [password, setPassword] = useState('')
   const supabase = createClientComponentClient<Database>()
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/
-
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!emailRegex.test(email)) {
-      alert('正しいメールアドレスを入力してください')
-      return
-    }
-
-    if (!passwordRegex.test(password)) {
-      alert(
-        'パスワードは8文字以上で、大文字・小文字・数字・記号を含めてください'
-      )
-      return
-    }
 
     supabase.auth
       .signUp({
@@ -73,11 +59,15 @@ export default function Signup() {
         </Form.Group>
 
         <Form.Group className="mb-4">
-          <Form.Label>パスワード</Form.Label>
+          <Form.Label>パスワード : </Form.Label>
+          <Form.Text className="text-muted">
+            大文字と小文字の英数字を含む8文字以上で入力してください。
+          </Form.Text>
           <Form.Control
             id="password"
             required
             autoComplete="new-password"
+            pattern={passwordPattern}
             type={showPassword ? 'text' : 'password'}
             onChange={(e) => setPassword(e.target.value)}
           />

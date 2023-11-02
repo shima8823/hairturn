@@ -5,6 +5,8 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
+import { passwordPattern } from '@/lib/user'
+
 export default function Confirm() {
   const router = useRouter()
   const supabase = createClientComponentClient()
@@ -40,10 +42,14 @@ export default function Confirm() {
         </p>
         <Form className="space-y-4" onSubmit={handleSubmit}>
           <Form.Group className="space-y-2">
-            <Form.Label htmlFor="newPassword">新しいパスワード</Form.Label>
+            <Form.Label htmlFor="newPassword">新しいパスワード:</Form.Label>
+            <Form.Text className="text-muted">
+              大文字と小文字の英数字を含む8文字以上で入力してください。
+            </Form.Text>
             <Form.Control
               id="newPassword"
               required
+              pattern={passwordPattern}
               autoComplete="new-password"
               type="password"
               onChange={(e) => setNewPassword(e.target.value)}
