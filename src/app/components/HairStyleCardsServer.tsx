@@ -2,7 +2,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import HairStyleCards from './HairStyleCards'
 import { Database } from '@/lib/database.types'
-import { cardData, cardsData } from '../../lib/card-data'
+import { cardsData } from '../../lib/card-data'
 import HairStyleControls from './HairStyleControls'
 
 type Hairstyle = Database['public']['Tables']['hairstyles']['Row']
@@ -13,7 +13,7 @@ export default async function HairStyleCardsServer() {
     data: { session }
   } = await supabase.auth.getSession()
 
-  var cards: cardData[] = []
+  var hairstyles: Hairstyle[] = []
 
   if (session) {
     const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/hairstyles', {
@@ -28,22 +28,27 @@ export default async function HairStyleCardsServer() {
     const json = await res.json()
     if (json) {
       json.forEach((hairstyle: Hairstyle) => {
-        const newCard: cardData = {
+        const newHair: Hairstyle = {
+          id: hairstyle.id,
+          user_id: hairstyle.user_id,
           image_url: hairstyle.image_url,
           title: hairstyle.title,
-          description: hairstyle.description
+          description: hairstyle.description,
+          created_at: hairstyle.created_at,
+          updated_at: hairstyle.updated_at,
+          is_deleted: hairstyle.is_deleted
         }
-        cards.push(newCard)
+        hairstyles.push(newHair)
       })
     }
   } else {
-    cards = cardsData
+    hairstyles = cardsData
   }
 
   return (
     <div>
-      <HairStyleControls cards={cards} session={session} />
-      <HairStyleCards cards={cards} session={session} />
+      <HairStyleControls hairstyles={hairstyles} session={session} />
+      <HairStyleCards hairstyles={hairstyles} session={session} />
       <div
         className="d-flex justify-content-center mt-4 mb-4"
         style={{ gap: '1rem' }}

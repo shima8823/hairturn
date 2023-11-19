@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { Card, Row, Col, Container, Dropdown } from 'react-bootstrap'
-import { cardData } from '../../lib/card-data'
 import styles from './HairStyleCards.module.css'
 import { useRouter } from 'next/navigation'
 import {
@@ -11,20 +10,23 @@ import {
 } from '@supabase/auth-helpers-nextjs'
 import DisplayCard from './DisplayCard'
 
+import { Database } from '@/lib/database.types'
+type Hairstyle = Database['public']['Tables']['hairstyles']['Row']
+
 export default function HairStyleCards({
-  cards,
+  hairstyles,
   session
 }: {
-  cards: cardData[]
+  hairstyles: Hairstyle[]
   session: Session | null
 }) {
   const [showModal, setShowModal] = useState(false)
-  const [selectedCard, setSelectedCard] = useState<cardData | null>(null)
+  const [selectedCard, setSelectedCard] = useState<Hairstyle | null>(null)
   const supabase = createClientComponentClient()
   const router = useRouter()
 
-  const handleCardClick = (card: cardData) => {
-    setSelectedCard(card)
+  const handleCardClick = (hairstyle: Hairstyle) => {
+    setSelectedCard(hairstyle)
     setShowModal(true)
   }
 
@@ -33,12 +35,12 @@ export default function HairStyleCards({
     setSelectedCard(null)
   }
 
-  const handleDeleteHair = async (card: cardData) => {
-    if (!card || !session) return
+  const handleDeleteHair = async (hairstyle: Hairstyle) => {
+    if (!hairstyle || !session) return
 
     // hairstylesテーブルから削除して、storageからも削除する
-    // card.imageのファイル名を取得 urlの最後の/以降の文字列
-    const url = card.image_url
+    // hairstyle.imageのファイル名を取得 urlの最後の/以降の文字列
+    const url = hairstyle.image_url
     if (url) {
       const fileName = url.split('/').pop()
       if (fileName) {
@@ -59,7 +61,7 @@ export default function HairStyleCards({
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(card)
+      body: JSON.stringify(hairstyle)
     })
     if (!res.ok) {
       return
@@ -71,7 +73,7 @@ export default function HairStyleCards({
   return (
     <Container>
       <Row>
-        {cards.map((card, index) => (
+        {hairstyles.map((hairstyle, index) => (
           <Col
             lg={4}
             md={6}
@@ -80,15 +82,15 @@ export default function HairStyleCards({
             className="d-flex justify-content-center"
           >
             <div className={styles.cardContainer}>
-              <Card onClick={() => handleCardClick(card)}>
+              <Card onClick={() => handleCardClick(hairstyle)}>
                 <Card.Img
                   variant="top"
-                  src={card.image_url ? card.image_url : ''}
+                  src={hairstyle.image_url ? hairstyle.image_url : ''}
                   className={styles.cardImage}
                 />
                 <Card.Body>
                   <div className={styles.header}>
-                    <Card.Title>{card.title}</Card.Title>
+                    <Card.Title>{hairstyle.title}</Card.Title>
                     <Dropdown onClick={(e) => e.stopPropagation()}>
                       <Dropdown.Toggle
                         id="dropdown-basic"
@@ -100,7 +102,7 @@ export default function HairStyleCards({
                       <Dropdown.Menu>
                         <Dropdown.Item
                           onClick={() => {
-                            handleDeleteHair(card)
+                            handleDeleteHair(hairstyle)
                           }}
                         >
                           削除
@@ -118,7 +120,8 @@ export default function HairStyleCards({
         <DisplayCard
           show={showModal}
           handleClose={handleCloseModal}
-          card={selectedCard}
+          hairstyle={selectedCard}
+          session={session}
         />
       )}
     </Container>
