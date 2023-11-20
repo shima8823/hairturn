@@ -18,7 +18,6 @@ export default function DisplayCard(props: {
 
   const handleAddHistory = async () => {
     if (!props.session) return
-    // cardのidとuseridが欲しい
     const res = await fetch('/api/hairstyle-history', {
       method: 'POST',
       headers: {
@@ -51,10 +50,11 @@ export default function DisplayCard(props: {
         )}
         <p>{props.hairstyle.description}</p>
       </Modal.Body>
-
-      <Modal.Footer>
-        <Button onClick={handleAddHistory}>履歴に追加</Button>
-      </Modal.Footer>
+      {props.session && (
+        <Modal.Footer>
+          <Button onClick={handleAddHistory}>履歴に追加</Button>
+        </Modal.Footer>
+      )}
     </Modal>
   )
 }
