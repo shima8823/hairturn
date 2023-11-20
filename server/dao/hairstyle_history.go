@@ -35,7 +35,9 @@ func (r *hairstyleHistory) Retrieve(ctx context.Context, user_id string) ([]*obj
 	// hairstyle_idを元にhairstylesからhairstyleを取得
 	// hairstyleを返す
 
-	const retrieve = "SELECT hairstyles.id, hairstyles.user_id, hairstyles.image_url, hairstyles.title, hairstyles.description, hairstyles.created_at, hairstyles.updated_at FROM hairstyles INNER JOIN hairstyle_history ON hairstyles.id = hairstyle_history.hairstyle_id WHERE hairstyle_history.user_id = $1"
+	// hairstylesのcreated_atをhairstyle_historyのcreated_atを置換している
+	const retrieve = "SELECT hairstyles.id, hairstyles.user_id, hairstyles.image_url, hairstyles.title, hairstyles.description, hairstyle_history.created_at, hairstyles.updated_at FROM hairstyles INNER JOIN hairstyle_history ON hairstyles.id = hairstyle_history.hairstyle_id WHERE hairstyle_history.user_id = $1"
+
 	var rows *sql.Rows
 	var err error
 	rows, err = r.db.QueryContext(ctx, retrieve, user_id)
