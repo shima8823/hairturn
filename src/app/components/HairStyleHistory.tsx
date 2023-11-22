@@ -68,9 +68,9 @@ export default function HairStyleCards({
       </div>
 
       <div style={{ padding: '20px' }}>
-        {sortedHairstyles.map((hairstyle) => (
+        {sortedHairstyles.map((hairstyle, i) => (
           <Card
-            key={hairstyle.id}
+            key={i}
             className="d-flex flex-row mb-3"
             style={{ maxWidth: '700px', margin: 'auto' }}
             onClick={() => handleCardClick(hairstyle)}
