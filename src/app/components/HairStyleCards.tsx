@@ -4,10 +4,7 @@ import { useState } from 'react'
 import { Card, Row, Col, Container, Dropdown } from 'react-bootstrap'
 import styles from './HairStyleCards.module.css'
 import { useRouter } from 'next/navigation'
-import {
-  createClientComponentClient,
-  Session
-} from '@supabase/auth-helpers-nextjs'
+import { Session } from '@supabase/auth-helpers-nextjs'
 import DisplayCard from './DisplayCard'
 
 import { Database } from '@/lib/database.types'
@@ -22,7 +19,6 @@ export default function HairStyleCards({
 }) {
   const [showModal, setShowModal] = useState(false)
   const [selectedCard, setSelectedCard] = useState<Hairstyle | null>(null)
-  const supabase = createClientComponentClient()
   const router = useRouter()
 
   const handleCardClick = (hairstyle: Hairstyle) => {
@@ -38,23 +34,6 @@ export default function HairStyleCards({
   const handleDeleteHair = async (hairstyle: Hairstyle) => {
     if (!hairstyle || !session) return
 
-    // hairstylesテーブルから削除して、storageからも削除する
-    // hairstyle.imageのファイル名を取得 urlの最後の/以降の文字列
-    const url = hairstyle.image_url
-    if (url) {
-      const fileName = url.split('/').pop()
-      if (fileName) {
-        const { data, error } = await supabase.storage
-          .from('hairstyles')
-          .remove([session.user.id + '/' + fileName])
-
-        if (error) {
-          alert('画像の削除に失敗しました。')
-          return
-        }
-      }
-    }
-
     // hairstylesテーブルから削除
     const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/hairstyles', {
       method: 'DELETE',
@@ -64,8 +43,10 @@ export default function HairStyleCards({
       body: JSON.stringify(hairstyle)
     })
     if (!res.ok) {
+      alert('削除に失敗しました。')
       return
     }
+
     handleCloseModal()
     router.refresh()
   }
