@@ -10,6 +10,7 @@ type (
 	DAO interface {
 		Account() repository.Account
 		HairStyle() repository.HairStyle
+		HairStyleHistory() repository.HairStyleHistory
 	}
 
 	dao struct {
@@ -30,3 +31,6 @@ func (r *dao) HairStyle() repository.HairStyle {
 	return NewHairStyle(r.db)
 }
 
+func (r *dao) HairStyleHistory() repository.HairStyleHistory {
+	return NewHairStyleHistory(r.db)
+}

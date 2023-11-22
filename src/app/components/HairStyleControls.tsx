@@ -2,23 +2,25 @@
 
 import { useState } from 'react'
 import { Button } from 'react-bootstrap'
-import { cardData } from '../../lib/card-data'
 import RegisterCardModal from './RegisterCardModal'
 import { Session } from '@supabase/supabase-js'
 import DisplayCard from './DisplayCard'
 
+import { Database } from '@/lib/database.types'
+type Hairstyle = Database['public']['Tables']['hairstyles']['Row']
+
 export default function HairStyleControls({
-  cards,
+  hairstyles,
   session
 }: {
-  cards: cardData[]
+  hairstyles: Hairstyle[]
   session: Session | null
 }) {
   //   DisplayCard
   const [showRandomCard, setShowRandomCard] = useState(false)
-  const [selectedCard, setSelectedCard] = useState<cardData | null>(null)
+  const [selectedCard, setSelectedCard] = useState<Hairstyle | null>(null)
   const selectRandomCard = () => {
-    setSelectedCard(cards[Math.floor(Math.random() * cards.length)])
+    setSelectedCard(hairstyles[Math.floor(Math.random() * hairstyles.length)])
     setShowRandomCard(true)
   }
   const handleCloseRandomCard = () => {
@@ -50,7 +52,8 @@ export default function HairStyleControls({
         <DisplayCard
           show={showRandomCard}
           handleClose={handleCloseRandomCard}
-          card={selectedCard}
+          hairstyle={selectedCard}
+          session={session}
         />
       )}
 

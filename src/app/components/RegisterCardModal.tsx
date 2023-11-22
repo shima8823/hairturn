@@ -7,9 +7,10 @@ import {
   Session
 } from '@supabase/auth-helpers-nextjs'
 import Image from 'next/image'
-
-import { cardData } from '../../lib/card-data'
 import crypto from 'crypto'
+
+import { Database } from '@/lib/database.types'
+type Hairstyle = Database['public']['Tables']['hairstyles']['Row']
 
 function generateSecureRandomString(length: number): string {
   return crypto.randomBytes(length).toString('hex').slice(0, length)
@@ -71,10 +72,15 @@ export default function RegisterCardModal(props: {
       imageStoragePath = await fetchImage('hairstyles', saveStoragePath)
     }
 
-    const newCard: cardData = {
+    const newHair: Hairstyle = {
+      id: 0,
+      user_id: props.session.user.id,
       image_url: imageStoragePath ? imageStoragePath : null,
       title: title,
-      description: description
+      description: description,
+      created_at: '0001-01-01T00:00:00Z',
+      updated_at: '0001-01-01T00:00:00Z',
+      is_deleted: null
     }
 
     const res = await fetch('/api/hairstyles', {
@@ -82,12 +88,12 @@ export default function RegisterCardModal(props: {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(newCard)
+      body: JSON.stringify(newHair)
     })
     if (!res.ok) {
       alert('登録に失敗しました')
-      if (newCard.image_url) {
-        const fileName = newCard.image_url.split('/').pop()
+      if (newHair.image_url) {
+        const fileName = newHair.image_url.split('/').pop()
         if (fileName) {
           const { data, error } = await supabase.storage
             .from('hairstyles')
