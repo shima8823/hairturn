@@ -44,12 +44,20 @@ export default function HairStyleCards({
   }
 
   return (
-    <div>
+    <div style={{ padding: '20px', margin: '0 auto', maxWidth: '1200px' }}>
       <div
-        className="d-flex justify-content-center"
+        className="d-flex justify-content-between"
         style={{ padding: '20px' }}
       >
-        <div className="d-flex align-items-center">
+        <h1 style={{ textAlign: 'left', marginLeft: '200px' }}>History</h1>
+
+        <div
+          className="d-flex align-items-center"
+          style={{
+            justifyContent: 'flex-end',
+            marginRight: '200px'
+          }}
+        >
           <ButtonGroup>
             <Button
               variant={isDesc ? 'primary' : 'light'}
@@ -66,6 +74,10 @@ export default function HairStyleCards({
           </ButtonGroup>
         </div>
       </div>
+
+      <p style={{ marginLeft: '20px', color: 'gray', textAlign: 'center' }}>
+        ※履歴は最大12件まで保存されます。13件目が追加されると、最も古い履歴が自動的に削除されます。
+      </p>
 
       <div style={{ padding: '20px' }}>
         {sortedHairstyles.map((hairstyle, i) => (
