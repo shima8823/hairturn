@@ -8,3 +8,5 @@ require (
 )
 
 require github.com/supabase-community/storage-go v0.7.0
+
+require github.com/resendlabs/resend-go v1.7.0
