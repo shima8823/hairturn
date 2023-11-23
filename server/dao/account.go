@@ -37,3 +37,26 @@ func (r *account) Retrieve(ctx context.Context, id string) (*object.Account, err
 	return result, nil
 }
 
+func (r *account) RetrieveReminderUser(ctx context.Context) ([]string, error) {
+	const retrieve = "SELECT a.email FROM users u JOIN auth.users a ON u.id = a.id WHERE u.reminder_date = CURRENT_DATE"
+	rows, err := r.db.QueryContext(ctx, retrieve)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+    var emails []string
+    for rows.Next() {
+        var email string
+        if err := rows.Scan(&email); err != nil {
+            return nil, err
+        }
+        emails = append(emails, email)
+    }
+
+    if err = rows.Err(); err != nil {
+        return nil, err
+    }
+
+    return emails, nil
+}
