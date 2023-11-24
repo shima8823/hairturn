@@ -10,4 +10,5 @@ type Account interface {
 	Create(ctx context.Context, id string) (sql.Result, error)
 	Retrieve(ctx context.Context, id string) (*object.Account, error)
 	RetrieveReminderUser(ctx context.Context) ([]string, error)
+	Update(ctx context.Context, id string, reminderDate string) (sql.Result, error)
 }

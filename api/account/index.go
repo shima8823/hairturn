@@ -21,7 +21,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodPost:
 		accountHandler.Create(w, r)
-		
+	case http.MethodPatch:
+		accountHandler.Update(w, r)
 	default:
 		w.WriteHeader(http.StatusMethodNotAllowed)
 	}

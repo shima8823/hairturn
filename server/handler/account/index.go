@@ -2,6 +2,7 @@ package account
 
 import (
 	"encoding/json"
+	"hairturn/server"
 	"hairturn/server/domain/object"
 	"hairturn/server/domain/repository"
 	"net/http"
@@ -45,6 +46,42 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 
 	// TODO: json response
 	
+}
+
+func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
+	id, err := server.Authenticate(w, r)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	if id == "" {
+		http.Error(w, "id is required", http.StatusBadRequest)
+		return
+	}
+
+	var req object.Account
+
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	req.Id = id
+	res, err := h.AccountRepo.Update(r.Context(), req.Id, req.ReminderDate)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	affected, err := res.RowsAffected()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if affected == 0 {
+		http.Error(w, "failed to update", http.StatusInternalServerError)
+		return
+	}
 }
 
 const maxEmails = 50

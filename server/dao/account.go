@@ -38,7 +38,8 @@ func (r *account) Retrieve(ctx context.Context, id string) (*object.Account, err
 }
 
 func (r *account) RetrieveReminderUser(ctx context.Context) ([]string, error) {
-	const retrieve = "SELECT a.email FROM users u JOIN auth.users a ON u.id = a.id WHERE u.reminder_date = CURRENT_DATE"
+	// JSTの午前6時に実行される (UTCの21時)ため、CURRENT_DATE + 1を指定する
+	const retrieve = "SELECT a.email FROM users u JOIN auth.users a ON u.id = a.id WHERE u.reminder_date = CURRENT_DATE + 1"
 	rows, err := r.db.QueryContext(ctx, retrieve)
     if err != nil {
         return nil, err
@@ -59,4 +60,13 @@ func (r *account) RetrieveReminderUser(ctx context.Context) ([]string, error) {
     }
 
     return emails, nil
+}
+
+func (r *account) Update(ctx context.Context, id string, reminderDate string) (sql.Result, error) {
+	const update = "UPDATE users SET reminder_date = $1 WHERE id = $2"
+	result, err := r.db.ExecContext(ctx, update, reminderDate, id)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
