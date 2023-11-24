@@ -32,6 +32,12 @@ export default function Header({ session }: { session: Session | null }) {
               <Nav className="me-auto"></Nav>
               {session ? (
                 <NavDropdown title="マイページ" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="/account">
+                    アカウント
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/hairstyle-history">
+                    履歴
+                  </NavDropdown.Item>
                   <NavDropdown.Item onClick={handleLogout}>
                     ログアウト
                   </NavDropdown.Item>

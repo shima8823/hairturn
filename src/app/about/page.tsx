@@ -5,13 +5,12 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import styles from '@/app/about/page.module.css'
 import Image from 'next/image'
 
-import { useRouter } from 'next/navigation'
-
 const hairstylesListImage = '/assets/image/hairstyles-list.png'
 const randomStyleImage = '/assets/image/random.png'
+const historyImage = '/assets/image/history.png'
+const reminderImage = '/assets/image/reminder.png'
 
 export default function About() {
-  const router = useRouter()
   return (
     <Container className="my-5">
       <div className="text-center">
@@ -42,6 +41,34 @@ export default function About() {
           />
           <p className={`${styles['large-text']}`}>
             リストからランダムに髪型を選んでくれます。
+          </p>
+        </div>
+        <p className={`${styles['large-text']} mb-2`}>髪型の履歴を残したい</p>
+        <div className={`${styles['service-point']} mb-5 p-1 `}>
+          <Image
+            src={historyImage}
+            alt="history"
+            width={1200}
+            height={700}
+            className={`${styles['image-style']}`}
+          />
+          <p className={`${styles['large-text']}`}>
+            過去に選んだ髪型の履歴を残すことができます。
+          </p>
+        </div>
+        <p className={`${styles['large-text']} mb-2`}>
+          髪型の変更日を通知してほしい
+        </p>
+        <div className={`${styles['service-point']} mb-5 p-1 `}>
+          <Image
+            src={reminderImage}
+            alt="reminder"
+            width={1200}
+            height={700}
+            className={`${styles['image-style']}`}
+          />
+          <p className={`${styles['large-text']}`}>
+            髪型の変更日を登録したメールアドレスに通知してくれます。
           </p>
         </div>
         <Button variant="outline-success" href="/signup">

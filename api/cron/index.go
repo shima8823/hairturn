@@ -19,10 +19,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	accountHandler := account.NewHandler(dao.Account())
 
 	switch r.Method {
-	case http.MethodPost:
-		accountHandler.Create(w, r)
-	case http.MethodPatch:
-		accountHandler.Update(w, r)
+	case http.MethodGet:
+		accountHandler.SendReminderMail(w, r)
 	default:
 		w.WriteHeader(http.StatusMethodNotAllowed)
 	}

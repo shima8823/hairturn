@@ -1,12 +1,11 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
-import HairStyleCards from './HairStyleCards'
-import { Database } from '@/lib/database.types'
-import { cardsData } from '../../lib/card-data'
-import HairStyleControls from './HairStyleControls'
+import HairStyleHistory from './HairStyleHistory'
 
+import { Database } from '@/lib/database.types'
 type Hairstyle = Database['public']['Tables']['hairstyles']['Row']
-export default async function HairStyleCardsServer() {
+
+export default async function HairStyleHistoryServer() {
   const cookieStore = cookies()
   const supabase = createServerComponentClient({ cookies: () => cookieStore })
   const {
@@ -16,12 +15,15 @@ export default async function HairStyleCardsServer() {
   var hairstyles: Hairstyle[] = []
 
   if (session) {
-    const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/hairstyles', {
-      method: 'GET',
-      headers: {
-        Cookie: cookieStore.toString()
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_API_URL + '/hairstyle-history',
+      {
+        method: 'GET',
+        headers: {
+          Cookie: cookieStore.toString()
+        }
       }
-    })
+    )
     if (!res.ok) {
       return
     }
@@ -41,14 +43,11 @@ export default async function HairStyleCardsServer() {
         hairstyles.push(newHair)
       })
     }
-  } else {
-    hairstyles = cardsData
   }
 
   return (
     <div>
-      <HairStyleControls hairstyles={hairstyles} session={session} />
-      <HairStyleCards hairstyles={hairstyles} session={session} />
+      <HairStyleHistory hairstyles={hairstyles} />
       <div
         className="d-flex justify-content-center mt-4 mb-4"
         style={{ gap: '1rem' }}

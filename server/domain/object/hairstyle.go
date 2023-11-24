@@ -11,5 +11,6 @@ type (
 		Description *string `json:"description" db:"description"`
 		CreatedAt time.Time `json:"created_at" db:"created_at"`
 		UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
+		IsDeleted *bool `json:"is_deleted" db:"is_deleted"`
 	}
 )

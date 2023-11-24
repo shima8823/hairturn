@@ -3,11 +3,10 @@ package api
 import (
 	"net/http"
 	"hairturn/server/dao"
-	"hairturn/server/handler/account"
+	"hairturn/server/handler/hairstyle_history"
 
 	"github.com/jmoiron/sqlx"
 )
-
 var db *sqlx.DB
 
 func Handler(w http.ResponseWriter, r *http.Request) {
@@ -16,13 +15,13 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 	dao := dao.New(db)
-	accountHandler := account.NewHandler(dao.Account())
+	hairstyleHistoryHandler := hairstyleHistory.NewHandler(dao.HairStyleHistory())
 
 	switch r.Method {
+	case http.MethodGet:
+		hairstyleHistoryHandler.Retrieve(w, r)
 	case http.MethodPost:
-		accountHandler.Create(w, r)
-	case http.MethodPatch:
-		accountHandler.Update(w, r)
+		hairstyleHistoryHandler.Create(w, r)
 	default:
 		w.WriteHeader(http.StatusMethodNotAllowed)
 	}
