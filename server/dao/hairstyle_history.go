@@ -19,6 +19,8 @@ func NewHairStyleHistory(db *sqlx.DB) repository.HairStyleHistory {
 	return &hairstyleHistory{db: db}
 }
 
+const maxHairstyleHistory = 6
+
 func (r *hairstyleHistory) Create(ctx context.Context, hairstyleHistory *object.HairStyleHistory) (sql.Result, error) {
 	tx, err := r.db.BeginTxx(ctx, nil)
 	if err != nil {
@@ -40,8 +42,8 @@ func (r *hairstyleHistory) Create(ctx context.Context, hairstyleHistory *object.
 		return nil, err
 	}
 
-	// エントリ数が12個以上の場合、最も古いエントリを削除
-	if count > 12 {
+	// エントリ数がmaxHairstyleHistory個以上の場合、最も古いエントリを削除
+	if count > maxHairstyleHistory {
 		const oldestQuery = "SELECT * FROM hairstyle_history WHERE user_id = $1 ORDER BY created_at ASC LIMIT 1"
 		oldestHairstyleHistory := object.HairStyleHistory{}
 		err = tx.QueryRowxContext(ctx, oldestQuery, hairstyleHistory.UserId).StructScan(&oldestHairstyleHistory)

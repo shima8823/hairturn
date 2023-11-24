@@ -76,7 +76,7 @@ export default function HairStyleCards({
       </div>
 
       <p style={{ marginLeft: '20px', color: 'gray', textAlign: 'center' }}>
-        ※履歴は最大12件まで保存されます。13件目が追加されると、最も古い履歴が自動的に削除されます。
+        ※履歴は最大6件まで保存されます。7件目が追加されると、最も古い履歴が自動的に削除されます。
       </p>
 
       <div style={{ padding: '20px' }}>

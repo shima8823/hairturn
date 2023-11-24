@@ -2,8 +2,10 @@
 import { Modal, Button } from 'react-bootstrap'
 import Image from 'next/image'
 import { Session } from '@supabase/auth-helpers-nextjs'
+import { useState } from 'react'
 
 import { Database } from '@/lib/database.types'
+import ReminderModal from './ReminderModal'
 type Hairstyle = Database['public']['Tables']['hairstyles']['Row']
 
 export default function DisplayCard(props: {
@@ -12,6 +14,8 @@ export default function DisplayCard(props: {
   hairstyle: Hairstyle
   session: Session | null
 }) {
+  const [ReminderModalShow, setReminderModalShow] = useState(false)
+
   const handleClose = () => {
     props.handleClose()
   }
@@ -30,7 +34,7 @@ export default function DisplayCard(props: {
       return
     }
     alert('履歴に追加しました。')
-    handleClose()
+    setReminderModalShow(true)
   }
 
   return (
@@ -55,6 +59,13 @@ export default function DisplayCard(props: {
           <Button onClick={handleAddHistory}>履歴に追加</Button>
         </Modal.Footer>
       )}
+      <ReminderModal
+        show={ReminderModalShow}
+        handleClose={() => {
+          setReminderModalShow(false)
+          handleClose()
+        }}
+      />
     </Modal>
   )
 }

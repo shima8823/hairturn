@@ -89,12 +89,15 @@ export interface Database {
       users: {
         Row: {
           id: string
+          reminder_date: string | null
         }
         Insert: {
           id: string
+          reminder_date?: string | null
         }
         Update: {
           id?: string
+          reminder_date?: string | null
         }
         Relationships: [
           {
