@@ -8,5 +8,11 @@
     { "src": "/api/account", "dest": "/api/account" },
     { "src": "/api/hairstyles", "dest": "/api/hairstyles" },
     { "src": "/api/hairstyle-history", "dest": "/api/hairstyle-history" }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron",
+      "schedule": "0 21 * * *"
+    }
   ]
 }
