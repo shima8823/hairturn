@@ -46,9 +46,8 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	req.UserId = id
-	if req.Title == "" {
-		http.Error(w, "title is required", http.StatusBadRequest)
+	if ok, msg := isValid(&req); !ok {
+		http.Error(w, msg, http.StatusBadRequest)
 		return
 	}
 
@@ -72,6 +71,22 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 	// TODO: json response
 }
 
+func isValid(req *object.HairStyle) (bool, string) {
+
+	if req.Title == "" || len(req.Title) > 150 {
+		return false, "title is invalid"
+	}
+
+	if req.ImageURL != nil && len(*req.ImageURL) > 150 {
+		return false, "image url is invalid"
+	}
+
+	if req.Description != nil && len(*req.Description) > 150 {
+		return false, "description is invalid"
+	}
+
+	return true, ""
+}
 
 func (h *Handler) Retrieve(w http.ResponseWriter, r *http.Request) {
 	id, err := server.Authenticate(w, r)
