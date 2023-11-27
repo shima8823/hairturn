@@ -58,6 +58,15 @@ export default function RegisterCardModal(props: {
       alert('タイトルを入力してください')
       return
     }
+
+    if (
+      title.length > 150 ||
+      (description != null && description.length > 150)
+    ) {
+      alert('タイトルまたは説明文は150文字以内で入力してください')
+      return
+    }
+
     if (file) {
       // supabase に保存、成功したらそのurlを取得してpublic.hairstylesに保存
       const randomFileName = generateSecureRandomString(15)
