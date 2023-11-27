@@ -71,7 +71,15 @@ export default function HairStyleCards({
                 />
                 <Card.Body>
                   <div className={styles.header}>
-                    <Card.Title>{hairstyle.title}</Card.Title>
+                    <Card.Title
+                      style={{
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      {hairstyle.title}
+                    </Card.Title>
                     <Dropdown onClick={(e) => e.stopPropagation()}>
                       <Dropdown.Toggle
                         id="dropdown-basic"

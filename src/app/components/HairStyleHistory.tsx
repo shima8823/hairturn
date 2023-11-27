@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Card, Dropdown, ButtonGroup, Button } from 'react-bootstrap'
+import { Card, ButtonGroup, Button } from 'react-bootstrap'
+
 import DisplayCard from './DisplayCard'
 
 import { Database } from '@/lib/database.types'
@@ -47,32 +48,30 @@ export default function HairStyleCards({
     <div style={{ padding: '20px', margin: '0 auto', maxWidth: '1200px' }}>
       <div
         className="d-flex justify-content-between"
-        style={{ padding: '20px' }}
+        style={{ padding: '20px', maxWidth: '70%', margin: 'auto' }}
       >
-        <h1 style={{ textAlign: 'left', marginLeft: '200px' }}>History</h1>
+        <h1 style={{ textAlign: 'left', margin: '0 20px' }}>History</h1>
 
-        <div
-          className="d-flex align-items-center"
+        <ButtonGroup
           style={{
+            display: 'flex',
             justifyContent: 'flex-end',
-            marginRight: '200px'
+            margin: '0 20px'
           }}
         >
-          <ButtonGroup>
-            <Button
-              variant={isDesc ? 'primary' : 'light'}
-              onClick={() => setIsDesc(true)}
-            >
-              新しい順
-            </Button>
-            <Button
-              variant={!isDesc ? 'primary' : 'light'}
-              onClick={() => setIsDesc(false)}
-            >
-              古い順
-            </Button>
-          </ButtonGroup>
-        </div>
+          <Button
+            variant={isDesc ? 'primary' : 'light'}
+            onClick={() => setIsDesc(true)}
+          >
+            new
+          </Button>
+          <Button
+            variant={!isDesc ? 'primary' : 'light'}
+            onClick={() => setIsDesc(false)}
+          >
+            old
+          </Button>
+        </ButtonGroup>
       </div>
 
       <p style={{ marginLeft: '20px', color: 'gray', textAlign: 'center' }}>
@@ -83,52 +82,52 @@ export default function HairStyleCards({
         {sortedHairstyles.map((hairstyle, i) => (
           <Card
             key={i}
-            className="d-flex flex-row mb-3"
-            style={{ maxWidth: '700px', margin: 'auto' }}
+            className="mb-3"
+            style={{ maxWidth: '70%', margin: 'auto' }}
             onClick={() => handleCardClick(hairstyle)}
           >
             <Card.Body style={{ flex: 1, display: 'flex' }}>
-              <div
+              <Card.Img
+                src={hairstyle.image_url ? hairstyle.image_url : ''}
                 style={{
+                  marginRight: '20px',
                   minWidth: '100px',
-                  height: '100px',
                   overflow: 'hidden',
-                  marginRight: '20px'
+                  width: '100px',
+                  height: '100px',
+                  objectFit: 'cover'
                 }}
-              >
-                <Card.Img
-                  src={hairstyle.image_url ? hairstyle.image_url : ''}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-              </div>
+              />
               <div
                 style={{
-                  flex: 1,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between'
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  wordWrap: 'break-word'
                 }}
               >
-                <div>
-                  <Card.Title>{hairstyle.title}</Card.Title>
-                  <Card.Text>{hairstyle.description}</Card.Text>
-                </div>
-                <Card.Footer style={{ textAlign: 'right', paddingTop: '5px' }}>
-                  {formatDate(hairstyle.created_at)}
-                </Card.Footer>
+                <Card.Title className="text-truncate">
+                  {hairstyle.title}
+                </Card.Title>
+                <Card.Text className="text-truncate">
+                  {hairstyle.description}
+                </Card.Text>
               </div>
             </Card.Body>
+            <Card.Footer style={{ textAlign: 'right', paddingTop: '5px' }}>
+              {formatDate(hairstyle.created_at)}
+            </Card.Footer>
           </Card>
         ))}
-        {selectedCard && (
-          <DisplayCard
-            show={showModal}
-            handleClose={handleCloseModal}
-            hairstyle={selectedCard}
-            session={null}
-          />
-        )}
       </div>
+      {selectedCard && (
+        <DisplayCard
+          show={showModal}
+          handleClose={handleCloseModal}
+          hairstyle={selectedCard}
+          session={null}
+        />
+      )}
     </div>
   )
 }

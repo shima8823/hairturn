@@ -19,10 +19,10 @@ export default function Header({ session }: { session: Session | null }) {
   }
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar className="bg-body-tertiary">
       <Container>
         <Navbar.Brand href="/">HairTurn</Navbar.Brand>
-        <Nav>
+        <Nav style={{ flexGrow: 1 }}>
           <Nav.Link href="/about">About</Nav.Link>
         </Nav>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
