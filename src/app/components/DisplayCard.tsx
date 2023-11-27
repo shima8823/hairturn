@@ -40,7 +40,16 @@ export default function DisplayCard(props: {
   return (
     <Modal show={props.show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>{props.hairstyle.title}</Modal.Title>
+        <Modal.Title
+          style={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'normal',
+            wordWrap: 'break-word'
+          }}
+        >
+          {props.hairstyle.title}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {props.hairstyle.image_url && (
@@ -52,7 +61,9 @@ export default function DisplayCard(props: {
             layout="responsive"
           />
         )}
-        <p>{props.hairstyle.description}</p>
+        <p style={{ overflow: 'auto', wordWrap: 'break-word' }}>
+          {props.hairstyle.description}
+        </p>
       </Modal.Body>
       {props.session && (
         <Modal.Footer>
